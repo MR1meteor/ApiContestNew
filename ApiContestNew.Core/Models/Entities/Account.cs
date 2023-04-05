@@ -1,4 +1,4 @@
-﻿namespace ApiContestNew.Core.Entities
+﻿namespace ApiContestNew.Core.Models.Entities
 {
     public class Account
     {

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ApiContestNew.Core.Entities
+namespace ApiContestNew.Core.Models.Entities
 {
     public class AnimalVisitedLocation
     {
         public long Id { get; set; }
         [Precision(6)]
         public DateTimeOffset DateTimeOfVisitLocationPoint { get; set; }
-        
+
         public long LocationPointId { get; set; }
         public LocationPoint LocationPoint { get; set; } = new();
 

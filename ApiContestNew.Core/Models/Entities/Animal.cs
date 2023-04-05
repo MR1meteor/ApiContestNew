@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ApiContestNew.Core.Entities
+namespace ApiContestNew.Core.Models.Entities
 {
     public class Animal
     {
@@ -24,7 +24,7 @@ namespace ApiContestNew.Core.Entities
 
         public long ChippingLocationId { get; set; }
         public LocationPoint ChippingLocation { get; set; } = new();
-        
+
         public ICollection<AnimalType> AnimalTypes { get; set; } = new List<AnimalType>();
         public ICollection<AnimalVisitedLocation> VisitedLocations { get; set; } = new List<AnimalVisitedLocation>();
     }

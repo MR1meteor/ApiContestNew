@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\ApiContestNew.Application\ApiContestNew.Application.csproj" />
+    <ProjectReference Include="..\ApiContestNew.Core\ApiContestNew.Core.csproj" />
+    <ProjectReference Include="..\ApiContestNew.Infrastructure\ApiContestNew.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
