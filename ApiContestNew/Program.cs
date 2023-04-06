@@ -13,9 +13,11 @@ builder.Services.AddControllers();
 
 // Services
 builder.Services.AddScoped<ILocationPointService, LocationPointService>();
+builder.Services.AddScoped<IAnimalTypeService, AnimalTypeService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();
+builder.Services.AddScoped<IAnimalTypeRepository, AnimalTypeRepository>();
 
 // DBContext
 builder.Services.AddDbContext<DataContext>(

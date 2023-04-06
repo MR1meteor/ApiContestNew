@@ -23,9 +23,18 @@
 
         public bool IsValid()
         {
-            if (Id <= 0 ||
-                Math.Abs(Latitude) >= 90 ||
-                Math.Abs(Longitude) >= 180)
+            if (Id <= 0 || !IsValidWithoutId())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidWithoutId()
+        {
+            if (Math.Abs(Latitude) > 90 ||
+                Math.Abs(Longitude) > 180)
             {
                 return false;
             }

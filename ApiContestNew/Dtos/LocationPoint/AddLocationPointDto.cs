@@ -1,6 +1,6 @@
 ﻿namespace ApiContestNew.Dtos.LocationPoint
 {
-    public class AddLocationPointDto
+    public record AddLocationPointDto
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }

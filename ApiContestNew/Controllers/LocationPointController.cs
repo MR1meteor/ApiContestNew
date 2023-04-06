@@ -56,7 +56,7 @@ namespace ApiContestNew.Controllers
 
             return response.StatusCode switch
             {
-                HttpStatusCode.OK => Ok(response.Data),
+                HttpStatusCode.OK => Ok(_mapper.Map<GetLocationPointDto>(response.Data)),
                 HttpStatusCode.BadRequest => BadRequest(),
                 HttpStatusCode.NotFound => NotFound(),
                 HttpStatusCode.Conflict => Conflict(),

@@ -34,7 +34,7 @@ namespace ApiContestNew.Application.Services
 
         async public Task<ServiceResponse<LocationPoint>> AddPointAsync(LocationPoint point)
         {
-            if(!point.IsValid())
+            if(!point.IsValidWithoutId())
             {
                 return new ServiceResponse400<LocationPoint>();
             }
@@ -53,6 +53,7 @@ namespace ApiContestNew.Application.Services
 
         async public Task<ServiceResponse<LocationPoint>> UpdatePointAsync(long id, LocationPoint point)
         {
+            point.Id = id;
             if(!point.IsValid())
             {
                 return new ServiceResponse400<LocationPoint>();

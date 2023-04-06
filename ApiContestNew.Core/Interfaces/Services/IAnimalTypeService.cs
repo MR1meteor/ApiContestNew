@@ -7,7 +7,7 @@ namespace ApiContestNew.Core.Interfaces.Services
     {
         Task<ServiceResponse<AnimalType>> GetAnimalTypeAsync(long id);
         Task<ServiceResponse<AnimalType>> AddAnimalTypeAsync(AnimalType animalType);
-        Task<ServiceResponse<AnimalType>> UpdateAnimalTypeAsync(long id, AnimalType animnalType);
+        Task<ServiceResponse<AnimalType>> UpdateAnimalTypeAsync(long id, AnimalType animalType);
         Task<ServiceResponse<AnimalType>> DeleteAnimalTypeAsync(long id);
     }
 }
