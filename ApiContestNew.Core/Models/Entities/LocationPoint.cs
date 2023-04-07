@@ -1,6 +1,6 @@
 ﻿namespace ApiContestNew.Core.Models.Entities
 {
-    public class LocationPoint
+    public class LocationPoint : BaseEntity
     {
         public long Id { get; set; }
         public double Latitude { get; set; }

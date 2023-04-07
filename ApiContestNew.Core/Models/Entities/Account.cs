@@ -1,6 +1,6 @@
 ﻿namespace ApiContestNew.Core.Models.Entities
 {
-    public class Account
+    public class Account : BaseEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; } = string.Empty;

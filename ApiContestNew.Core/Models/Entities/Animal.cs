@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiContestNew.Core.Models.Entities
 {
-    public class Animal
+    public class Animal : BaseEntity
     {
         public long Id { get; set; }
         //[Column(TypeName = "float(18, 10)")]

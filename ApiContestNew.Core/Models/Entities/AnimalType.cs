@@ -1,6 +1,6 @@
 ﻿namespace ApiContestNew.Core.Models.Entities
 {
-    public class AnimalType
+    public class AnimalType : BaseEntity
     {
         public long Id { get; set; }
         public string Type { get; set; } = string.Empty;

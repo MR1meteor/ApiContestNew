@@ -1,31 +1,30 @@
 ﻿using ApiContestNew.Core.Interfaces.Repositories;
 using ApiContestNew.Core.Models.Entities;
+using ApiContestNew.Core.Specifications.AnimalType;
 using ApiContestNew.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiContestNew.Infrastructure.Repositories
 {
-    public class AnimalTypeRepository : IAnimalTypeRepository
+    public class AnimalTypeRepository : BaseRepository<AnimalType>, IAnimalTypeRepository
     {
-        private DataContext _dbContext;
 
         public AnimalTypeRepository(DataContext dbContext)
+            : base(dbContext)
         {
-            _dbContext = dbContext;
+            
         }
 
         async public Task<AnimalType?> GetTypeByIdAsync(long id)
         {
-            return await _dbContext.AnimalTypes
-                .Include(t => t.Animals)
-                .FirstOrDefaultAsync(t => t.Id == id);
+            return await ApplySpecification(new TypeByIdWithAnimals(id))
+                .FirstOrDefaultAsync();
         }
 
         async public Task<AnimalType?> GetTypeByTypeAsync(string type)
         {
-            return await _dbContext.AnimalTypes
-                .Include(t => t.Animals)
-                .FirstOrDefaultAsync(t => t.Type == type);
+            return await ApplySpecification(new TypeByTypeWithAnimals(type))
+                .FirstOrDefaultAsync();
         }
 
         async public Task<AnimalType?> AddTypeAsync(AnimalType animalType)

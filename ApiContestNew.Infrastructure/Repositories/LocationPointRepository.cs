@@ -1,33 +1,29 @@
 ﻿using ApiContestNew.Core.Interfaces.Repositories;
 using ApiContestNew.Core.Models.Entities;
+using ApiContestNew.Core.Specifications.LocationPoint;
 using ApiContestNew.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiContestNew.Infrastructure.Repositories
 {
-    public class LocationPointRepository : ILocationPointRepository
+    public class LocationPointRepository : BaseRepository<LocationPoint>, ILocationPointRepository
     {
-        private readonly DataContext _dbContext;
-
         public LocationPointRepository(DataContext dbContext)
+            : base(dbContext)
         {
-            _dbContext = dbContext;
+            
         }
 
         async public Task<LocationPoint?> GetPointByIdAsync(long id)
         {
-            return await _dbContext.LocationPoints
-                .Include(p => p.AnimalVisitedLocation)
-                .Include(p => p.ChippedAnimals)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            return await ApplySpecification(new PointByIdWithAll(id))
+                .FirstOrDefaultAsync();
         }
         
         public async Task<LocationPoint?> GetPointByCoordsAsync(double latitude, double longitude)
         {
-            return await _dbContext.LocationPoints
-                .Include(p => p.AnimalVisitedLocation)
-                .Include (p => p.ChippedAnimals)
-                .FirstOrDefaultAsync(p => p.Latitude == latitude && p.Longitude == longitude);
+            return await ApplySpecification(new PointByCoordsWithAll(latitude, longitude))
+                .FirstOrDefaultAsync();
         }
 
         public async Task<LocationPoint?> AddPointAsync(LocationPoint point)

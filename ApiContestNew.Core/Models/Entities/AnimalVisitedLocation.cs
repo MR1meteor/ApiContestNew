@@ -2,7 +2,7 @@
 
 namespace ApiContestNew.Core.Models.Entities
 {
-    public class AnimalVisitedLocation
+    public class AnimalVisitedLocation : BaseEntity
     {
         public long Id { get; set; }
         [Precision(6)]
