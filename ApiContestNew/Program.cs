@@ -14,10 +14,12 @@ builder.Services.AddControllers();
 // Services
 builder.Services.AddScoped<ILocationPointService, LocationPointService>();
 builder.Services.AddScoped<IAnimalTypeService, AnimalTypeService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();
 builder.Services.AddScoped<IAnimalTypeRepository, AnimalTypeRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 // DBContext
 builder.Services.AddDbContext<DataContext>(

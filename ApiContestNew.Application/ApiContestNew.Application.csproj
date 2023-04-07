@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ApiContestNew.Core\ApiContestNew.Core.csproj" />
     <ProjectReference Include="..\ApiContestNew.Infrastructure\ApiContestNew.Infrastructure.csproj" />
   </ItemGroup>

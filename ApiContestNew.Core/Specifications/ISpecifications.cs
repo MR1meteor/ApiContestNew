@@ -8,5 +8,7 @@ namespace ApiContestNew.Core.Specifications
         public List<Expression<Func<T, object>>> IncludeExpressions { get; }
         public Expression<Func<T, object>>? OrderByExpression { get; }
         public Expression<Func<T, object>>? OrderByDescendingExpression { get; }
+        public int? Take { get; }
+        public int? Skip { get; }
     }
 }

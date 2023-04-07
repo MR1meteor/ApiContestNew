@@ -35,6 +35,16 @@ namespace ApiContestNew.Core.Specifications
                 queryable = queryable.OrderByDescending(specification.OrderByDescendingExpression);
             }
 
+            if (specification.Skip != null)
+            {
+                queryable = queryable.Skip((int)specification.Skip);
+            }
+
+            if (specification.Take != null)
+            {
+                queryable = queryable.Take((int)specification.Take);
+            }
+
             return queryable;
         }
     }

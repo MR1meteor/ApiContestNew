@@ -8,6 +8,8 @@ namespace ApiContestNew.Core.Specifications
         public List<Expression<Func<T, object>>> IncludeExpressions { get; } = new();
         public Expression<Func<T, object>>? OrderByExpression { get; private set; }
         public Expression<Func<T, object>>? OrderByDescendingExpression { get; private set; }
+        public int? Take { get; private set; }
+        public int? Skip { get; private set; }
 
         protected BaseSpecification(Expression<Func<T, bool>>? criteria)
         {
@@ -27,6 +29,16 @@ namespace ApiContestNew.Core.Specifications
         protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescendingExpression = orderByDescendingExpression;
+        }
+
+        protected void AddTake(int take)
+        {
+            Take = take;
+        }
+
+        protected void AddSkip(int skip)
+        { 
+            Skip = skip;
         }
     }
 }
