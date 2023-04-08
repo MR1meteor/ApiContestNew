@@ -7,11 +7,11 @@ namespace ApiContestNew.Application.Services
 {
     public class AnimalTypeService : IAnimalTypeService
     {
-        private IAnimalTypeRepository _animalTypeRepo;
+        private IAnimalTypeRepository _animalTypeRepository;
 
-        public AnimalTypeService(IAnimalTypeRepository animalTypeRepo)
+        public AnimalTypeService(IAnimalTypeRepository animalTypeRepository)
         {
-            _animalTypeRepo = animalTypeRepo;
+            _animalTypeRepository = animalTypeRepository;
         }
 
         async public Task<ServiceResponse<AnimalType>> GetAnimalTypeAsync(long id)
@@ -21,7 +21,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<AnimalType>();
             }
 
-            var type = await _animalTypeRepo.GetTypeByIdAsync(id);
+            var type = await _animalTypeRepository.GetTypeByIdAsync(id);
             if (type == null)
             {
                 return new ServiceResponse404<AnimalType>();
@@ -37,14 +37,14 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<AnimalType>();
             }
 
-            var type = await _animalTypeRepo.GetTypeByTypeAsync(animalType.Type);
+            var type = await _animalTypeRepository.GetTypeByTypeAsync(animalType.Type);
 
             if (type != null) 
             {
                 return new ServiceResponse409<AnimalType>();
             }
 
-            var createdType = await _animalTypeRepo.AddTypeAsync(animalType);
+            var createdType = await _animalTypeRepository.AddTypeAsync(animalType);
 
             return new ServiceResponse201<AnimalType>(data: createdType);
         }
@@ -57,19 +57,19 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<AnimalType>();
             }
 
-            var type = await _animalTypeRepo.GetTypeByIdAsync(id);
+            var type = await _animalTypeRepository.GetTypeByIdAsync(id);
             if (type == null)
             {
                 return new ServiceResponse404<AnimalType>();
             }
 
-            var equalType = await _animalTypeRepo.GetTypeByTypeAsync(animalType.Type);
+            var equalType = await _animalTypeRepository.GetTypeByTypeAsync(animalType.Type);
             if (equalType != null)
             {
                 return new ServiceResponse409<AnimalType>();
             }
 
-            var editedType = await _animalTypeRepo.UpdateTypeAsync(animalType);
+            var editedType = await _animalTypeRepository.UpdateTypeAsync(animalType);
 
             return new ServiceResponse200<AnimalType>(data: editedType);
         }
@@ -81,7 +81,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<AnimalType>();
             }
 
-            var type = await _animalTypeRepo.GetTypeByIdAsync(id);
+            var type = await _animalTypeRepository.GetTypeByIdAsync(id);
             if (type == null)
             {
                 return new ServiceResponse404<AnimalType>();
@@ -92,7 +92,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<AnimalType>();
             }
 
-            await _animalTypeRepo.DeleteTypeAsync(type);
+            await _animalTypeRepository.DeleteTypeAsync(type);
 
             return new ServiceResponse200<AnimalType>();
         }

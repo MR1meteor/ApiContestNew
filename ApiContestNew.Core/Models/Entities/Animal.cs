@@ -27,5 +27,17 @@ namespace ApiContestNew.Core.Models.Entities
 
         public ICollection<AnimalType> AnimalTypes { get; set; } = new List<AnimalType>();
         public ICollection<AnimalVisitedLocation> VisitedLocations { get; set; } = new List<AnimalVisitedLocation>();
+
+        public bool IsAbleToAddVisitedLocation(LocationPoint point)
+        {
+            if (LifeStatus == "DEAD" || 
+                VisitedLocations.Count <= 0 && ChippingLocation == point ||
+                VisitedLocations.Count > 0 && VisitedLocations.Last().LocationPoint == point)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

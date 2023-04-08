@@ -8,11 +8,11 @@ namespace ApiContestNew.Application.Services
 {
     public class LocationPointService : ILocationPointService
     {
-        private readonly ILocationPointRepository _locationPointRepo;
+        private readonly ILocationPointRepository _locationPointRepository;
 
-        public LocationPointService(ILocationPointRepository locationPointRepo)
+        public LocationPointService(ILocationPointRepository locationPointRepository)
         {
-            _locationPointRepo = locationPointRepo;
+            _locationPointRepository = locationPointRepository;
         }
 
         async public Task<ServiceResponse<LocationPoint>> GetPointAsync(long id)
@@ -22,7 +22,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<LocationPoint>();
             }
 
-            var point = await _locationPointRepo.GetPointByIdAsync(id);
+            var point = await _locationPointRepository.GetPointByIdAsync(id);
 
             if (point == null)
             {
@@ -39,14 +39,14 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<LocationPoint>();
             }
 
-            var equalPoint = await _locationPointRepo.GetPointByCoordsAsync(point.Latitude, point.Longitude);
+            var equalPoint = await _locationPointRepository.GetPointByCoordsAsync(point.Latitude, point.Longitude);
 
             if (equalPoint != null)
             {
                 return new ServiceResponse409<LocationPoint>();
             }
 
-            var createdPoint = await _locationPointRepo.AddPointAsync(point);
+            var createdPoint = await _locationPointRepository.AddPointAsync(point);
 
             return new ServiceResponse201<LocationPoint>(data: createdPoint);
         }
@@ -59,19 +59,19 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<LocationPoint>();
             }
 
-            var editablePoint = await _locationPointRepo.GetPointByIdAsync(id);
+            var editablePoint = await _locationPointRepository.GetPointByIdAsync(id);
             if(editablePoint == null)
             {
                 return new ServiceResponse404<LocationPoint>();
             }
 
-            var equalPoint = await _locationPointRepo.GetPointByCoordsAsync(point.Latitude, point.Longitude);
+            var equalPoint = await _locationPointRepository.GetPointByCoordsAsync(point.Latitude, point.Longitude);
             if(equalPoint != null)
             {
                 return new ServiceResponse409<LocationPoint>();
             }
 
-            var editedPoint = await _locationPointRepo.UpdatePointAsync(point);
+            var editedPoint = await _locationPointRepository.UpdatePointAsync(point);
 
             return new ServiceResponse200<LocationPoint>(data: editedPoint);
         }
@@ -83,7 +83,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<LocationPoint>();
             }
 
-            var point = await _locationPointRepo.GetPointByIdAsync(id);
+            var point = await _locationPointRepository.GetPointByIdAsync(id);
 
             if (point == null)
             {
@@ -96,7 +96,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<LocationPoint>();
             }
 
-            await _locationPointRepo.DeletePointAsync(point);
+            await _locationPointRepository.DeletePointAsync(point);
 
             return new ServiceResponse200<LocationPoint>();
         }
