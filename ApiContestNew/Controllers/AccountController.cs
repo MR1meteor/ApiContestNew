@@ -3,6 +3,7 @@ using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Dtos.Account;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -21,6 +22,7 @@ namespace ApiContestNew.Controllers
             _mapper = mapper;
         }
 
+        
         [HttpGet("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> GetAccount(int accountId)
         {
