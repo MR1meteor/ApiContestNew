@@ -12,6 +12,7 @@ namespace ApiContestNew.Helpers
         {
             // Account
             CreateMap<Account, GetAccountDto>();
+            CreateMap<AddAccountDto, Account>();
             CreateMap<UpdateAccountDto, Account>();
 
             // Animal type

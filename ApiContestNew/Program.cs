@@ -8,7 +8,6 @@ using ApiContestNew.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using ApiContestNew.Core.Handlers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.VisualBasic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +18,9 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ILocationPointService, LocationPointService>();
 builder.Services.AddScoped<IAnimalTypeService, AnimalTypeService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped
+    <ApiContestNew.Core.Interfaces.Services.IAuthenticationService,
+    ApiContestNew.Application.Services.AuthenticationService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();

@@ -9,10 +9,24 @@ namespace ApiContestNew.Infrastructure.Repositories
 {
     public class AuthenticationRepository : BaseRepository<Account>, IAuthenticationRepository
     {
-        public AuthenticationRepository(DataContext dataContext)
+        private readonly IAccountRepository _accountRepository;
+
+        public AuthenticationRepository(
+            DataContext dataContext,
+            IAccountRepository accountRepository)
             : base(dataContext)
         {
+            _accountRepository = accountRepository;
+        }
 
+        async public Task<Account?> Register(Account account)
+        {
+            account.Password = EncodePassword(account.Password);
+
+            _dbContext.Add(account);
+            await _dbContext.SaveChangesAsync();
+
+            return await _accountRepository.GetAccountByEmailAsync(account.Email);
         }
 
         async public Task<bool> Authenticate(string username, string password)
