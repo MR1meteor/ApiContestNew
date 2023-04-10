@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiContestNew.Infrastructure.Repositories
 {
-    internal class AnimalRepository : BaseRepository<Animal>, IAnimalRepository
+    public class AnimalRepository : BaseRepository<Animal>, IAnimalRepository
     {
         public AnimalRepository(DataContext dataContext)
             : base(dataContext)

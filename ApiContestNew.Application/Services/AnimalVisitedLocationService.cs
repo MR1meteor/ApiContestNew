@@ -67,7 +67,7 @@ namespace ApiContestNew.Application.Services
 
         async public Task<ServiceResponse<AnimalVisitedLocation>> UpdateVisitedLocationAsync(long animalId, AnimalVisitedLocation visitedLocation)
         {
-            if (animalId <= 0 || !visitedLocation.IsValidWithoutId())
+            if (animalId <= 0 || !visitedLocation.IsValid())
             {
                 return new ServiceResponse400<AnimalVisitedLocation>();
             }

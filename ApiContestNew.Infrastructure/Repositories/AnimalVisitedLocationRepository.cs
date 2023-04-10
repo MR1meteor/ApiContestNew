@@ -31,6 +31,7 @@ namespace ApiContestNew.Infrastructure.Repositories
         {
             var location = new AnimalVisitedLocation();
             location.LocationPoint = point;
+            location.DateTimeOfVisitLocationPoint = DateTimeOffset.UtcNow;
 
             _dbContext.AnimalVisitedLocations.Add(location);
             await _dbContext.SaveChangesAsync();
@@ -41,6 +42,7 @@ namespace ApiContestNew.Infrastructure.Repositories
         public async Task<AnimalVisitedLocation?> UpdateLocationWithPointAsync(AnimalVisitedLocation location, LocationPoint point)
         {
             location.LocationPoint = point;
+            location.DateTimeOfVisitLocationPoint = DateTimeOffset.UtcNow;
             await _dbContext.SaveChangesAsync();
 
             return await GetLocationByIdAsync(location.Id);

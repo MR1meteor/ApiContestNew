@@ -1,11 +1,10 @@
-﻿using ApiContestNew.Core.Models.Entities;
-using ApiContestNew.Core.Models.Filters;
+﻿using ApiContestNew.Core.Models.Filters;
 
 namespace ApiContestNew.Core.Specifications.AnimalVisitedLocation
 {
     public class LocationByAnimalAndFilterWithAll : BaseSpecification<Models.Entities.AnimalVisitedLocation>
     {
-        public LocationByAnimalAndFilterWithAll(Animal animal, AnimalVisitedLocationFilter filter)
+        public LocationByAnimalAndFilterWithAll(Models.Entities.Animal animal, AnimalVisitedLocationFilter filter)
             : base(l =>
             l.Animals.Contains(animal) &&
             (filter.StartDateTime == null || filter.StartDateTime <= l.DateTimeOfVisitLocationPoint) &&

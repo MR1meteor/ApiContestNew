@@ -21,12 +21,15 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped
     <ApiContestNew.Core.Interfaces.Services.IAuthenticationService,
     ApiContestNew.Application.Services.AuthenticationService>();
+builder.Services.AddScoped<IAnimalVisitedLocationService, AnimalVisitedLocationService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();
 builder.Services.AddScoped<IAnimalTypeRepository, AnimalTypeRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+builder.Services.AddScoped<IAnimalVisitedLocationRepository, AnimalVisitedLocationRepository>();
+builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 
 // DBContext
 builder.Services.AddDbContext<DataContext>(

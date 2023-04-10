@@ -15,7 +15,7 @@ namespace ApiContestNew.Core.Models.Entities
         
         public AnimalVisitedLocation()
         {
-            DateTimeOfVisitLocationPoint = DateTimeOffset.UtcNow;
+            // DateTimeOfVisitLocationPoint = DateTimeOffset.UtcNow;
         }
 
         public bool IsValid()
