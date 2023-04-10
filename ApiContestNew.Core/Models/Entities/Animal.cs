@@ -39,5 +39,42 @@ namespace ApiContestNew.Core.Models.Entities
 
             return true;
         }
+
+        public bool IsAbleToUpdateVisitedLocation(AnimalVisitedLocation location, LocationPoint point)
+        {
+            int locationIndex = ((List<AnimalVisitedLocation>)VisitedLocations).IndexOf(location);
+
+            if (VisitedLocations.First() == location && ChippingLocation == point ||
+
+                locationIndex == 0 && locationIndex < VisitedLocations.Count - 1 &&
+                VisitedLocations.ElementAt(locationIndex + 1).LocationPoint == point ||
+
+                locationIndex == VisitedLocations.Count - 1 && locationIndex > 0 &&
+                VisitedLocations.ElementAt(locationIndex - 1).LocationPoint == point ||
+                
+                locationIndex < VisitedLocations.Count - 1 && locationIndex > 0 &&
+                (VisitedLocations.ElementAt(locationIndex + 1).LocationPoint == point ||
+                VisitedLocations.ElementAt(locationIndex - 1).LocationPoint == point) ||
+                
+                location.LocationPoint == point)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public int NextLocationIndexIfEqual(AnimalVisitedLocation location)
+        {
+            int locationIndex = ((List<AnimalVisitedLocation>)VisitedLocations).IndexOf(location);
+
+            if (locationIndex <  VisitedLocations.Count - 1 && locationIndex == 0 &&
+                VisitedLocations.ElementAt(locationIndex + 1).LocationPoint == ChippingLocation)
+            {
+                return locationIndex + 1;
+            }
+
+            return -1;
+        }
     }
 }

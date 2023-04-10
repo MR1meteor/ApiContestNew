@@ -12,5 +12,30 @@ namespace ApiContestNew.Core.Models.Entities
         public LocationPoint LocationPoint { get; set; } = new();
 
         public ICollection<Animal> Animals { get; set; } = new List<Animal>();
+        
+        public AnimalVisitedLocation()
+        {
+            DateTimeOfVisitLocationPoint = DateTimeOffset.UtcNow;
+        }
+
+        public bool IsValid()
+        {
+            if (Id <= 0 || !IsValidWithoutId())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidWithoutId()
+        {
+            if (LocationPointId <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
