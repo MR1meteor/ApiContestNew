@@ -22,6 +22,7 @@ builder.Services.AddScoped
     <ApiContestNew.Core.Interfaces.Services.IAuthenticationService,
     ApiContestNew.Application.Services.AuthenticationService>();
 builder.Services.AddScoped<IAnimalVisitedLocationService, AnimalVisitedLocationService>();
+builder.Services.AddScoped<IAnimalService, AnimalService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();

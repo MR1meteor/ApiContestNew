@@ -1,4 +1,5 @@
 ﻿using ApiContestNew.Core.Models.Entities;
+using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Core.Models.Responses;
 
 namespace ApiContestNew.Core.Interfaces.Services
@@ -6,7 +7,7 @@ namespace ApiContestNew.Core.Interfaces.Services
     public interface IAnimalService
     {
         Task<ServiceResponse<Animal>> GetAnimalAsync(long id);
-        //Task<ServiceResponse<List<Animal>>> GetAnimalsAsync(AnimalFilter animalFilter); TODO: Add filters aka specifications
+        Task<ServiceResponse<List<Animal>>> GetAnimalsAsync(AnimalFilter animalFilter);
         Task<ServiceResponse<Animal>> AddAnimalAsync(Animal animal);
         Task<ServiceResponse<Animal>> UpdateAnimalAsync(long id, Animal animal);
         Task<ServiceResponse<Animal>> DeleteAnimalAsync(long id);

@@ -27,6 +27,12 @@ namespace ApiContestNew.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        async public Task<List<AnimalType>> GetTypesByIdsAsync(long[] ids)
+        {
+            return await ApplySpecification(new TypeByIds(ids))
+                .ToListAsync();
+        }
+
         async public Task<AnimalType?> AddTypeAsync(AnimalType animalType)
         {
             _dbContext.AnimalTypes.Add(animalType);

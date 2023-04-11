@@ -1,5 +1,7 @@
-﻿using ApiContestNew.Core.Models.Entities;
+﻿using ApiContestNew.Core.Interfaces.Repositories;
+using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Dtos.Account;
+using ApiContestNew.Dtos.Animal;
 using ApiContestNew.Dtos.AnimalType;
 using ApiContestNew.Dtos.AnimalVisitedLocation;
 using ApiContestNew.Dtos.LocationPoint;
@@ -15,6 +17,13 @@ namespace ApiContestNew.Helpers
             CreateMap<Account, GetAccountDto>();
             CreateMap<AddAccountDto, Account>();
             CreateMap<UpdateAccountDto, Account>();
+
+            // Animal
+            CreateMap<Animal, GetAnimalDto>()
+                .ForMember(x => x.AnimalTypes, opt => opt.MapFrom(z => z.AnimalTypes.Select(s => s.Id).ToArray()))
+                .ForMember(x => x.VisitedLocations, opt => opt.MapFrom(z => z.VisitedLocations.Select(s => s.Id).ToArray()));
+            CreateMap<AddAnimalDto, Animal>().ForMember(x => x.AnimalTypes, opt => opt.Ignore());
+            CreateMap<UpdateAnimalDto, Animal>();
 
             // Animal type
             CreateMap<AnimalType, GetAnimalTypeDto>();

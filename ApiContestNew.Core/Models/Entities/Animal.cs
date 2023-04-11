@@ -19,7 +19,7 @@ namespace ApiContestNew.Core.Models.Entities
         //[Precision(6)]
         public DateTimeOffset? DeathDateTime { get; set; } = null;
 
-        public long ChipperId { get; set; }
+        public int ChipperId { get; set; } // TODO: Разобраться откуда взялся ChipperId1
         public Account Chipper { get; set; } = new();
 
         public long ChippingLocationId { get; set; }
@@ -27,6 +27,32 @@ namespace ApiContestNew.Core.Models.Entities
 
         public ICollection<AnimalType> AnimalTypes { get; set; } = new List<AnimalType>();
         public ICollection<AnimalVisitedLocation> VisitedLocations { get; set; } = new List<AnimalVisitedLocation>();
+
+        public bool IsValid()
+        {
+            if (Id <= 0 || !IsValidWithoutId())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidWithoutId()
+        {
+            string[] lifeStatuses = { "ALIVE", "DEAD" };
+            string[] genders = { "MALE", "FEMALE", "OTHER" };
+
+            if (AnimalTypes.Count <= 0 ||
+                Weight <= 0 || Length <= 0 || Height <= 0 ||
+                !genders.Contains(Gender) || ChipperId <= 0 ||
+                ChippingLocationId <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         public bool IsAbleToAddVisitedLocation(LocationPoint point)
         {

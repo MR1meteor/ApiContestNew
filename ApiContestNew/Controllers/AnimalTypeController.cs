@@ -10,7 +10,7 @@ namespace ApiContestNew.Controllers
 {
     [Route("animals/types")]
     [ApiController]
-    public class AnimalTypeController : ControllerBase // TODO: Add Authentication
+    public class AnimalTypeController : ControllerBase
     {
         private readonly IAnimalTypeService _animalTypeService;
         private readonly IMapper _mapper;

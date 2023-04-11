@@ -29,6 +29,12 @@ namespace ApiContestNew.Application.Services
 
             return new ServiceResponse200<AnimalType>(data: type);
         }
+
+        async public Task<ServiceResponse<List<AnimalType>>> GetAnimalTypesByIdsAsync(long[] ids)
+        {
+            var types = await _animalTypeRepository.GetTypesByIdsAsync(ids);
+            return new ServiceResponse200<List<AnimalType>>(data: types);
+        }
         
         async public Task<ServiceResponse<AnimalType>> AddAnimalTypeAsync(AnimalType animalType)
         {

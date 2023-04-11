@@ -48,7 +48,7 @@ namespace ApiContestNew.Infrastructure.Repositories
 
         async public Task<Account?> DeleteAccountAsync(Account account)
         {
-            _dbContext.Remove(account);
+            _dbContext.Accounts.Remove(account);
             await _dbContext.SaveChangesAsync();
             return null;
         }
