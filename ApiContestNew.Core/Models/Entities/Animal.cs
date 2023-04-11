@@ -40,13 +40,23 @@ namespace ApiContestNew.Core.Models.Entities
 
         public bool IsValidWithoutId()
         {
+            if (AnimalTypes.Count <= 0 ||
+                !IsValidForUpdate())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidForUpdate()
+        {
             string[] lifeStatuses = { "ALIVE", "DEAD" };
             string[] genders = { "MALE", "FEMALE", "OTHER" };
 
-            if (AnimalTypes.Count <= 0 ||
-                Weight <= 0 || Length <= 0 || Height <= 0 ||
-                !genders.Contains(Gender) || ChipperId <= 0 ||
-                ChippingLocationId <= 0)
+            if (Weight <= 0 || Length <= 0 || Height <= 0 ||
+                !genders.Contains(Gender) || !lifeStatuses.Contains(LifeStatus) ||
+                ChipperId <= 0 || ChippingLocationId <= 0)
             {
                 return false;
             }

@@ -81,26 +81,31 @@ namespace ApiContestNew.Application.Services
         {
             animal.Id = id;
 
-            if (!animal.IsValid())
+            if (id <= 0 || !animal.IsValidForUpdate())
             {
                 return new ServiceResponse400<Animal>();
             }
 
             var dbAnimal = await _animalRepository.GetAnimalByIdAsync(id);
+            var chipper = await _accountRepository.GetAccountByIdAsync(animal.ChipperId);
+            var point = await _locationPointRepository.GetPointByIdAsync(animal.ChippingLocationId);
 
             if (dbAnimal == null ||
-                dbAnimal.Chipper == null ||
-                dbAnimal.ChippingLocation == null)
+                chipper == null ||
+                point == null)
             {
-                return new ServiceResponse409<Animal>();
+                return new ServiceResponse404<Animal>();
             }
 
             if (dbAnimal.LifeStatus == "DEAD" &&  dbAnimal.LifeStatus == "ALIVE" ||
                 dbAnimal.VisitedLocations.Count >= 0 &&
-                animal.VisitedLocations.First().LocationPointId == animal.ChippingLocationId)
+                dbAnimal.VisitedLocations.First().LocationPointId == animal.ChippingLocationId)
             {
                 return new ServiceResponse400<Animal>();
             }
+
+            animal.Chipper = chipper;
+            animal.ChippingLocation = point;
 
             var editedAnimal = await _animalRepository.UpdateAnimalAsync(animal);
 
