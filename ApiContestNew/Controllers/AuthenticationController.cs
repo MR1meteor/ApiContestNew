@@ -23,7 +23,12 @@ namespace ApiContestNew.Controllers
         [HttpPost("registration")]
         public async Task<ActionResult<GetAccountDto>> Register(AddAccountDto dto)
         {
-            var response =await _authenticationService.Register(_mapper.Map<Account>(dto));
+            if (!string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return StatusCode(403);
+            }
+
+            var response = await _authenticationService.Register(_mapper.Map<Account>(dto));
 
             return response.StatusCode switch
             {

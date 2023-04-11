@@ -2,6 +2,7 @@
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Dtos.AnimalType;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -10,6 +11,7 @@ namespace ApiContestNew.Controllers
 {
     [Route("animals/types")]
     [ApiController]
+    [Authorize]
     public class AnimalTypeController : ControllerBase
     {
         private readonly IAnimalTypeService _animalTypeService;

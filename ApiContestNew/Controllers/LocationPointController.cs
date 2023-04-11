@@ -2,6 +2,7 @@
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Dtos.LocationPoint;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -9,7 +10,8 @@ namespace ApiContestNew.Controllers
 {
     [Route("locations")]
     [ApiController]
-    public class LocationPointController : ControllerBase // TODO: Add authentication
+    [Authorize]
+    public class LocationPointController : ControllerBase
     {
         private readonly ILocationPointService _locationPointService;
         private readonly IMapper _mapper;

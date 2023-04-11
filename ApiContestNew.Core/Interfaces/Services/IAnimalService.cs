@@ -12,7 +12,7 @@ namespace ApiContestNew.Core.Interfaces.Services
         Task<ServiceResponse<Animal>> UpdateAnimalAsync(long id, Animal animal);
         Task<ServiceResponse<Animal>> DeleteAnimalAsync(long id);
         Task<ServiceResponse<Animal>> AddAnimalTypeToAnimalAsync(long animalId, long typeId);
-        //Task<ServiceResponse<Animal>> UpdateAnimalTypeAtAnimalAsync(long id, ); TODO: Add Additional class (see in reference proj)
+        Task<ServiceResponse<Animal>> UpdateAnimalTypeAtAnimalAsync(long animalId, long oldTypeId, long newTypeId);
         Task<ServiceResponse<Animal>> DeleteAnimalTypeAtAnimalAsync(long animalId, long typeId);
     }
 }

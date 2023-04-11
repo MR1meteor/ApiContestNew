@@ -3,6 +3,7 @@ using ApiContestNew.Core.Interfaces.Services;
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Core.Models.Responses;
+using System.Security.Claims;
 
 namespace ApiContestNew.Application.Services
 {
@@ -44,7 +45,7 @@ namespace ApiContestNew.Application.Services
             return new ServiceResponse200<List<Account>>(data: accounts);
         }
 
-        async public Task<ServiceResponse<Account>> UpdateAccountAsync(int id, Account account) // TODO: Add access check
+        async public Task<ServiceResponse<Account>> UpdateAccountAsync(int id, Account account)
         {
             account.Id = id;
             if (!account.IsValid())
@@ -53,7 +54,12 @@ namespace ApiContestNew.Application.Services
             }
 
             var editableAccount = await _accountRepository.GetAccountByIdAsync(id);
-            if (account == null)
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            var authorizedEmail = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+                .Select(c => c.Value).SingleOrDefault();
+
+            if (account == null ||
+                authorizedEmail != account.Email)
             {
                 return new ServiceResponse403<Account>();
             }

@@ -3,6 +3,7 @@ using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Dtos.AnimalVisitedLocation;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -10,6 +11,7 @@ namespace ApiContestNew.Controllers
 {
     [Route("animals/{animalId}/locations")]
     [ApiController]
+    [Authorize]
     public class AnimalVisitedLocationController : ControllerBase
     {
         private readonly IAnimalVisitedLocationService _animalVisitedLocationService;

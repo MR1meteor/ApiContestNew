@@ -35,7 +35,7 @@ namespace ApiContestNew.Core.Handlers
                 var credentials = encodedString.Split(':');
                 if (await _authenticationRepository.Authenticate(credentials[0], credentials[1]))
                 {
-                    var claims = new[] { new Claim("email", credentials[0]) };
+                    var claims = new[] { new Claim(ClaimTypes.Email, credentials[0]) };
                     var identity = new ClaimsIdentity(claims, "Basic");
                     var claimsPrincipal = new ClaimsPrincipal(identity);
                     return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
@@ -43,7 +43,7 @@ namespace ApiContestNew.Core.Handlers
             }
 
             Response.StatusCode = 401;
-            Response.Headers.Add("WWW-Authenticate", "Basic realm=\"joydipkanjilal.com\"");
+            Response.Headers.Add("WWW-Authenticate", "Basic realm=\"none\"");
             return await Task.FromResult(AuthenticateResult.Fail("Invalid Authorization Data"));
         }
     }

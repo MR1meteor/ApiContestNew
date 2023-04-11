@@ -3,6 +3,7 @@ using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Dtos.Animal;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -11,6 +12,7 @@ namespace ApiContestNew.Controllers
 {
     [Route("animal")]
     [ApiController]
+    [Authorize]
     public class AnimalController : ControllerBase
     {
         private readonly IAnimalService _animalService;
@@ -97,6 +99,50 @@ namespace ApiContestNew.Controllers
         public async Task<ActionResult<GetAnimalDto>> DeleteAnimal(long animalId)
         {
             var response = await _animalService.DeleteAnimalAsync(animalId);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => StatusCode(200),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpPost("{animalId}/types/{typeId}")]
+        public async Task<ActionResult<GetAnimalDto>> AddAnimalTypeToAnimal(long animalId, long typeId)
+        {
+            var response = await _animalService.AddAnimalTypeToAnimalAsync(animalId, typeId);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.Created => StatusCode(201, _mapper.Map<GetAnimalDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                HttpStatusCode.Conflict => Conflict(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpPut("{animalId}/types")]
+        public async Task<ActionResult<GetAnimalDto>> UpdateAnimalTypeAtAnimal(long animalId, UpdateAnimalTypeAtAnimalDto dto)
+        {
+            var response = await _animalService.UpdateAnimalTypeAtAnimalAsync(animalId, dto.OldTypeId, dto.NewTypeId);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(_mapper.Map<GetAnimalDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                HttpStatusCode.Conflict => Conflict(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpDelete("{animalId}/types/{typeId}")]
+        public async Task<ActionResult<GetAnimalDto>> DeleteAnimalTypeAtAnimal(long animalId, long typeId)
+        {
+            var response = await _animalService.DeleteAnimalTypeAtAnimalAsync(animalId, typeId);
 
             return response.StatusCode switch
             {

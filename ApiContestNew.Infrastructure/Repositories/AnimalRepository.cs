@@ -74,5 +74,27 @@ namespace ApiContestNew.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return await GetAnimalByIdAsync(animal.Id);
         }
+
+        public async Task<Animal?> AddAnimalTypeToAnimalAsync(Animal animal, AnimalType type)
+        {
+            animal.AnimalTypes.Add(type);
+            await _dbContext.SaveChangesAsync();
+            return await GetAnimalByIdAsync(animal.Id);
+        }
+
+        public async Task<Animal?> UpdateAnimalTypeAtAnimalAsync(Animal animal, AnimalType oldType, AnimalType newType)
+        {
+            animal.AnimalTypes.Remove(oldType);
+            animal.AnimalTypes.Add(newType);
+            await _dbContext.SaveChangesAsync();
+            return await GetAnimalByIdAsync(animal.Id);
+        }
+
+        public async Task<Animal?> DeleteAnimalTypeAtAnimalAsync(Animal animal, AnimalType type)
+        {
+            animal.AnimalTypes.Remove(type);
+            await _dbContext.SaveChangesAsync();
+            return await GetAnimalByIdAsync(animal.Id);
+        }
     }
 }

@@ -11,5 +11,8 @@ namespace ApiContestNew.Core.Interfaces.Repositories
         Task<Animal?> UpdateAnimalAsync(Animal animal);
         Task<Animal?> DeleteAnimalAsync(Animal animal);
         Task<Animal?> AddVisitedLocationToAnimalAsync(Animal animal, AnimalVisitedLocation location);
+        Task<Animal?> AddAnimalTypeToAnimalAsync(Animal animal, AnimalType type);
+        Task<Animal?> UpdateAnimalTypeAtAnimalAsync(Animal animal, AnimalType oldType, AnimalType newType);
+        Task<Animal?> DeleteAnimalTypeAtAnimalAsync(Animal animal, AnimalType type);
     }
 }
