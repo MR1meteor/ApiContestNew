@@ -100,8 +100,8 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse404<Animal>();
             }
 
-            if (dbAnimal.LifeStatus == "DEAD" &&  dbAnimal.LifeStatus == "ALIVE" ||
-                dbAnimal.VisitedLocations.Count >= 0 &&
+            if (dbAnimal.LifeStatus == "DEAD" &&  animal.LifeStatus == "ALIVE" ||
+                dbAnimal.VisitedLocations.Count > 0 &&
                 dbAnimal.VisitedLocations.First().LocationPointId == animal.ChippingLocationId)
             {
                 return new ServiceResponse400<Animal>();
