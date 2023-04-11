@@ -10,7 +10,7 @@ using System.Net;
 
 namespace ApiContestNew.Controllers
 {
-    [Route("animal")]
+    [Route("animals")]
     [ApiController]
     [Authorize]
     public class AnimalController : ControllerBase
