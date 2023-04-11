@@ -14,9 +14,9 @@ namespace ApiContestNew.Core.Models.Entities
         public float Height { get; set; }
         public string Gender { get; set; } = string.Empty;
         public string LifeStatus { get; set; } = string.Empty;
-        //[Precision(6)]
+        [Precision(6)]
         public DateTimeOffset ChippingDateTime { get; set; }
-        //[Precision(6)]
+        [Precision(6)]
         public DateTimeOffset? DeathDateTime { get; set; } = null;
 
         public int ChipperId { get; set; }

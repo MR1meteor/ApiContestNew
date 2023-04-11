@@ -55,11 +55,16 @@ namespace ApiContestNew.Application.Services
 
             var editableAccount = await _accountRepository.GetAccountByIdAsync(id);
             var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            
+            if (account == null || identity == null)
+            {
+                return new ServiceResponse403<Account>();
+            }
+
             var authorizedEmail = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
                 .Select(c => c.Value).SingleOrDefault();
 
-            if (account == null ||
-                authorizedEmail != account.Email)
+            if (account.Email != authorizedEmail)
             {
                 return new ServiceResponse403<Account>();
             }
