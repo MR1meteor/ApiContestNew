@@ -68,16 +68,15 @@ namespace ApiContestNew.Infrastructure.Migrations
                     LifeStatus = table.Column<string>(type: "text", nullable: false),
                     ChippingDateTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     DeathDateTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    ChipperId = table.Column<long>(type: "bigint", nullable: false),
-                    ChipperId1 = table.Column<int>(type: "integer", nullable: false),
+                    ChipperId = table.Column<int>(type: "integer", nullable: false),
                     ChippingLocationId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Animals_Accounts_ChipperId1",
-                        column: x => x.ChipperId1,
+                        name: "FK_Animals_Accounts_ChipperId",
+                        column: x => x.ChipperId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -168,9 +167,9 @@ namespace ApiContestNew.Infrastructure.Migrations
                 column: "VisitedLocationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Animals_ChipperId1",
+                name: "IX_Animals_ChipperId",
                 table: "Animals",
-                column: "ChipperId1");
+                column: "ChipperId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Animals_ChippingLocationId",

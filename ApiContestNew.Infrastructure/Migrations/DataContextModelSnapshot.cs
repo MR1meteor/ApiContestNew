@@ -89,10 +89,7 @@ namespace ApiContestNew.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("ChipperId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ChipperId1")
+                    b.Property<int>("ChipperId")
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("ChippingDateTime")
@@ -123,7 +120,7 @@ namespace ApiContestNew.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChipperId1");
+                    b.HasIndex("ChipperId");
 
                     b.HasIndex("ChippingLocationId");
 
@@ -222,7 +219,7 @@ namespace ApiContestNew.Infrastructure.Migrations
                 {
                     b.HasOne("ApiContestNew.Core.Models.Entities.Account", "Chipper")
                         .WithMany("ChippedAnimals")
-                        .HasForeignKey("ChipperId1")
+                        .HasForeignKey("ChipperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

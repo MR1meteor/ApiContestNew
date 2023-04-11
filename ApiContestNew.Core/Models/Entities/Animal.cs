@@ -19,7 +19,7 @@ namespace ApiContestNew.Core.Models.Entities
         //[Precision(6)]
         public DateTimeOffset? DeathDateTime { get; set; } = null;
 
-        public int ChipperId { get; set; } // TODO: Разобраться откуда взялся ChipperId1
+        public int ChipperId { get; set; }
         public Account Chipper { get; set; } = new();
 
         public long ChippingLocationId { get; set; }
