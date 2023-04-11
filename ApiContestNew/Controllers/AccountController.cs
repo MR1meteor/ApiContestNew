@@ -66,7 +66,7 @@ namespace ApiContestNew.Controllers
             };
         }
 
-        [HttpDelete("accountId")]
+        [HttpDelete("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> DeleteAccount(int accountId)
         {
             var response = await _accountService.DeleteAccountAsync(accountId);
