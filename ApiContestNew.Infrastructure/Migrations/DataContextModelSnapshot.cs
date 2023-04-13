@@ -93,15 +93,13 @@ namespace ApiContestNew.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("ChippingDateTime")
-                        .HasPrecision(6)
-                        .HasColumnType("timestamp(6) with time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("ChippingLocationId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeathDateTime")
-                        .HasPrecision(6)
-                        .HasColumnType("timestamp(6) with time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -155,8 +153,7 @@ namespace ApiContestNew.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTimeOffset>("DateTimeOfVisitLocationPoint")
-                        .HasPrecision(6)
-                        .HasColumnType("timestamp(6) with time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("LocationPointId")
                         .HasColumnType("bigint");
