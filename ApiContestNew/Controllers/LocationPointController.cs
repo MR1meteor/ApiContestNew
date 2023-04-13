@@ -23,6 +23,7 @@ namespace ApiContestNew.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpGet("{pointId}")]
         public async Task<ActionResult<GetLocationPointDto>> GetLocationPoint(long pointId)
         {
