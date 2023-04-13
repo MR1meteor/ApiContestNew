@@ -40,11 +40,10 @@ namespace ApiContestNew.Core.Models.Entities
 
         public bool IsValidWithoutId()
         {
-            string[] lifeStatuses = { "ALIVE", "DEAD" };
             string[] genders = { "MALE", "FEMALE", "OTHER" };
 
-            if (AnimalTypes.Count <= 0 || Weight <= 0 ||
-                Length <= 0 || Height <= 0 ||
+            if (AnimalTypes.Count <= 0 || AnimalTypes.Select(t => t.Id).Min() <= 0 ||
+                Weight <= 0 || Length <= 0 || Height <= 0 ||
                 !genders.Contains(Gender) || ChipperId <= 0 ||
                 ChippingLocationId <= 0)
             {
