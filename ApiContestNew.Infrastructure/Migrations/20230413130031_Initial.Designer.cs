@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiContestNew.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230411200533_ChangeAnimalDatePrecision")]
-    partial class ChangeAnimalDatePrecision
+    [Migration("20230413130031_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
