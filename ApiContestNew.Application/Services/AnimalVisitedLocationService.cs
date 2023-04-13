@@ -82,6 +82,7 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse404<AnimalVisitedLocation>();
             }
 
+            animal.VisitedLocations = animal.VisitedLocations.OrderBy(l => l.Id).ToList();
             if (!animal.IsAbleToUpdateVisitedLocation(location, point))
             {
                 return new ServiceResponse400<AnimalVisitedLocation>();
