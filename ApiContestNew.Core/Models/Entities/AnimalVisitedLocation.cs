@@ -5,7 +5,7 @@ namespace ApiContestNew.Core.Models.Entities
     public class AnimalVisitedLocation : BaseEntity
     {
         public long Id { get; set; }
-        //[Precision(6)]
+        [Precision(6)]
         public DateTimeOffset DateTimeOfVisitLocationPoint { get; set; }
 
         public long LocationPointId { get; set; }
