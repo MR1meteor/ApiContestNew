@@ -23,7 +23,7 @@ namespace ApiContestNew.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
+        
         [HttpGet("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> GetAccount(int accountId)
         {
@@ -38,7 +38,6 @@ namespace ApiContestNew.Controllers
             };
         }
 
-        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<ActionResult<List<GetAccountDto>>> GetAccounts([FromQuery] AccountFilter filter)
         {
