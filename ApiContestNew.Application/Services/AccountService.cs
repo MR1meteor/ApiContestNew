@@ -69,7 +69,7 @@ namespace ApiContestNew.Application.Services
             var authorizedEmail = claims.Where(c => c.Type == ClaimTypes.Email)
                 .Select(c => c.Value).SingleOrDefault();
 
-            if (account.Email != authorizedEmail)
+            if (editableAccount.Email != authorizedEmail)
             {
                 return new ServiceResponse403<Account>();
             }
