@@ -30,7 +30,10 @@ namespace ApiContestNew.Infrastructure.Repositories
         public async Task<Animal?> AddAnimalAsync(Animal animal)
         {
             animal.LifeStatus = "ALIVE";
-            animal.ChippingDateTime = DateTimeOffset.UtcNow;
+
+            DateTimeOffset dateTime = DateTimeOffset.UtcNow;
+            dateTime = dateTime.AddTicks(-(dateTime.Ticks % 10000));
+            animal.ChippingDateTime = dateTime;
 
             _dbContext.Animals.Add(animal);
             await _dbContext.SaveChangesAsync();
@@ -48,7 +51,9 @@ namespace ApiContestNew.Infrastructure.Repositories
             editableAnimal.LifeStatus = animal.LifeStatus;
             if (animal.LifeStatus == "DEAD")
             {
-                editableAnimal.DeathDateTime = DateTimeOffset.UtcNow;
+                DateTimeOffset dateTime = DateTimeOffset.UtcNow;
+                dateTime = dateTime.AddTicks(-(dateTime.Ticks % 10000));
+                editableAnimal.DeathDateTime = dateTime;
             }
             editableAnimal.ChipperId = animal.ChipperId;
             editableAnimal.Chipper = animal.Chipper;
