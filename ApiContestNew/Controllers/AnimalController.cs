@@ -29,7 +29,6 @@ namespace ApiContestNew.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         [HttpGet("{animalId}")]
         public async Task<ActionResult<GetAnimalDto>> GetAnimal(long animalId)
         {
@@ -44,7 +43,6 @@ namespace ApiContestNew.Controllers
             };
         }
 
-        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<ActionResult<List<GetAnimalDto>>> GetAnimals([FromQuery] AnimalFilter filter)
         {

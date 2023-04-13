@@ -23,7 +23,6 @@ namespace ApiContestNew.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<GetAnimalVisitedLocationDto>>> GetAnimalVisitedLocations(
             long animalId, [FromQuery] AnimalVisitedLocationFilter filter)

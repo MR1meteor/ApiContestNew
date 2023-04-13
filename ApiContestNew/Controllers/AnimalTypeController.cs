@@ -23,7 +23,6 @@ namespace ApiContestNew.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         [HttpGet("{typeId}")]
         public async Task<ActionResult<GetAnimalTypeDto>> GetAnimalType(long typeId)
         {
