@@ -3,6 +3,7 @@ using ApiContestNew.Core.Interfaces.Services;
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Core.Models.Responses;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
 namespace ApiContestNew.Application.Services
@@ -10,10 +11,14 @@ namespace ApiContestNew.Application.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public AccountService(IAccountRepository accountRepository)
+        public AccountService(
+            IAccountRepository accountRepository,
+            IHttpContextAccessor contextAccessor)
         {
             _accountRepository = accountRepository;
+            _contextAccessor = contextAccessor;
         }
 
         async public Task<ServiceResponse<Account>> GetAccountAsync(int id)
@@ -54,14 +59,14 @@ namespace ApiContestNew.Application.Services
             }
 
             var editableAccount = await _accountRepository.GetAccountByIdAsync(id);
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            var claims = _contextAccessor.HttpContext.User.Claims;
             
-            if (account == null || identity == null)
+            if (account == null || claims.Count() <= 0)
             {
                 return new ServiceResponse403<Account>();
             }
 
-            var authorizedEmail = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+            var authorizedEmail = claims.Where(c => c.Type == ClaimTypes.Email)
                 .Select(c => c.Value).SingleOrDefault();
 
             if (account.Email != authorizedEmail)

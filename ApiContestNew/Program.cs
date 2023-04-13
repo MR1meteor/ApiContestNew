@@ -14,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+// HttpContext
+builder.Services.AddHttpContextAccessor();
+
 // Services
 builder.Services.AddScoped<ILocationPointService, LocationPointService>();
 builder.Services.AddScoped<IAnimalTypeService, AnimalTypeService>();
