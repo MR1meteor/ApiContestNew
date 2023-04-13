@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiContestNew.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230413144023_AddPrecision")]
-    partial class AddPrecision
+    [Migration("20230413151108_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,8 +158,7 @@ namespace ApiContestNew.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTimeOffset>("DateTimeOfVisitLocationPoint")
-                        .HasPrecision(6)
-                        .HasColumnType("timestamp(6) with time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("LocationPointId")
                         .HasColumnType("bigint");
