@@ -61,7 +61,7 @@ namespace ApiContestNew.Application.Services
             var editableAccount = await _accountRepository.GetAccountByIdAsync(id);
             var claims = _contextAccessor.HttpContext.User.Claims;
             
-            if (account == null || claims.Count() <= 0)
+            if (editableAccount == null || claims.Count() <= 0)
             {
                 return new ServiceResponse403<Account>();
             }
