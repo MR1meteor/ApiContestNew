@@ -4,6 +4,7 @@ using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Core.Specifications.Account;
 using ApiContestNew.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace ApiContestNew.Infrastructure.Repositories
 {
@@ -40,7 +41,7 @@ namespace ApiContestNew.Infrastructure.Repositories
             editableAccount.FirstName = account.FirstName;
             editableAccount.LastName = account.LastName;
             editableAccount.Email = account.Email;
-            editableAccount.Password = account.Password;
+            editableAccount.Password = EncodePassword(account.Password);
             #pragma warning restore CS8602 // Dereference of a possibly null reference.
             await _dbContext.SaveChangesAsync();
             return await GetAccountByIdAsync(editableAccount.Id);
@@ -51,6 +52,13 @@ namespace ApiContestNew.Infrastructure.Repositories
             _dbContext.Accounts.Remove(account);
             await _dbContext.SaveChangesAsync();
             return null;
+        }
+
+        private string EncodePassword(string password)
+        {
+            var bytes = Encoding.UTF8.GetBytes(password);
+            var encodedPassword = Convert.ToBase64String(bytes);
+            return encodedPassword;
         }
     }
 }
