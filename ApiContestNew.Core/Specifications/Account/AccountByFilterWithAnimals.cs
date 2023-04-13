@@ -11,6 +11,7 @@ namespace ApiContestNew.Core.Specifications.Account
             (string.IsNullOrEmpty(filter.Email) || a.Email.ToLower().Contains(filter.Email.ToLower())))
         {
             AddInclude(a => a.ChippedAnimals);
+            AddOrderBy(a => a.Id);
             AddSkip(filter.From);
             AddTake(filter.Size);
         }
