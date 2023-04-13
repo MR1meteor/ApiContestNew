@@ -76,7 +76,7 @@ namespace ApiContestNew.Application.Services
             var location = await _visitedLocationRepository.GetLocationByIdAsync(visitedLocation.Id);
             var animal = await _animalRepository.GetAnimalByIdAsync(animalId);
 
-            if (point == null || location == null || location == null ||
+            if (point == null || location == null || animal == null ||
                 !animal.VisitedLocations.Contains(location))
             {
                 return new ServiceResponse404<AnimalVisitedLocation>();
