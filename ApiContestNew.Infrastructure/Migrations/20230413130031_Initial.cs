@@ -66,8 +66,8 @@ namespace ApiContestNew.Infrastructure.Migrations
                     Height = table.Column<float>(type: "real", nullable: false),
                     Gender = table.Column<string>(type: "text", nullable: false),
                     LifeStatus = table.Column<string>(type: "text", nullable: false),
-                    ChippingDateTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    DeathDateTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    ChippingDateTime = table.Column<DateTimeOffset>(type: "timestamp(6) with time zone", precision: 6, nullable: false),
+                    DeathDateTime = table.Column<DateTimeOffset>(type: "timestamp(6) with time zone", precision: 6, nullable: true),
                     ChipperId = table.Column<int>(type: "integer", nullable: false),
                     ChippingLocationId = table.Column<long>(type: "bigint", nullable: false)
                 },

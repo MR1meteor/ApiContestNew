@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiContestNew.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230411165622_Initial")]
+    [Migration("20230413130031_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -96,13 +96,15 @@ namespace ApiContestNew.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("ChippingDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasPrecision(6)
+                        .HasColumnType("timestamp(6) with time zone");
 
                     b.Property<long>("ChippingLocationId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeathDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasPrecision(6)
+                        .HasColumnType("timestamp(6) with time zone");
 
                     b.Property<string>("Gender")
                         .IsRequired()
