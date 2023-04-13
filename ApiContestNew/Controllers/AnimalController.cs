@@ -62,7 +62,7 @@ namespace ApiContestNew.Controllers
             var animal = _mapper.Map<Animal>(dto);
 
             var types = (await _animalTypeService.GetAnimalTypesByIdsAsync(dto.AnimalTypes)).Data;
-            if (types == null)
+            if (types == null || types.Count <= 0)
             {
                 return NotFound();
             }
