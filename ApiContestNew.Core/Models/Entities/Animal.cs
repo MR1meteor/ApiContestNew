@@ -82,7 +82,14 @@ namespace ApiContestNew.Core.Models.Entities
 
         public bool IsAbleToUpdateVisitedLocation(AnimalVisitedLocation location, LocationPoint point)
         {
-            int locationIndex = ((List<AnimalVisitedLocation>)VisitedLocations).IndexOf(location);
+            int locationIndex;
+            for (locationIndex = 0; locationIndex < VisitedLocations.Count; locationIndex++)
+            {
+                if (VisitedLocations.ElementAt(locationIndex) == location)
+                {
+                    break;
+                }
+            }
 
             if (VisitedLocations.First() == location && ChippingLocation == point ||
 
