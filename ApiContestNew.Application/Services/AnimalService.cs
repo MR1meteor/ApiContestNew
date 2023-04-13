@@ -67,8 +67,10 @@ namespace ApiContestNew.Application.Services
 
             var account = await _accountRepository.GetAccountByIdAsync(animal.ChipperId);
             var point = await _locationPointRepository.GetPointByIdAsync(animal.ChippingLocationId);
+            var types = await _animalTypeRepository.GetTypesByIdsAsync(animal.AnimalTypes.Select(t => t.Id).ToArray());
 
-            if (account == null || point == null)
+            if (types.Count < animal.AnimalTypes.Count ||
+                account == null || point == null)
             {
                 return new ServiceResponse404<Animal>();
             }
