@@ -59,6 +59,11 @@ namespace ApiContestNew.Controllers
         [HttpPost]
         public async Task<ActionResult<GetAnimalDto>> AddAnimal(AddAnimalDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var animal = _mapper.Map<Animal>(dto);
 
             if (dto.AnimalTypes.Length <= 0 ||  // TODO: remake that shit.. (+- 15 strings down)
@@ -91,6 +96,11 @@ namespace ApiContestNew.Controllers
         [HttpPut("{animalId}")]
         public async Task<ActionResult<GetAnimalDto>> UpdateAnimal(long animalId, UpdateAnimalDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalService.UpdateAnimalAsync(animalId, _mapper.Map<Animal>(dto));
 
             return response.StatusCode switch
@@ -105,6 +115,11 @@ namespace ApiContestNew.Controllers
         [HttpDelete("{animalId}")]
         public async Task<ActionResult<GetAnimalDto>> DeleteAnimal(long animalId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalService.DeleteAnimalAsync(animalId);
 
             return response.StatusCode switch
@@ -119,6 +134,11 @@ namespace ApiContestNew.Controllers
         [HttpPost("{animalId}/types/{typeId}")]
         public async Task<ActionResult<GetAnimalDto>> AddAnimalTypeToAnimal(long animalId, long typeId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalService.AddAnimalTypeToAnimalAsync(animalId, typeId);
 
             return response.StatusCode switch
@@ -134,6 +154,11 @@ namespace ApiContestNew.Controllers
         [HttpPut("{animalId}/types")]
         public async Task<ActionResult<GetAnimalDto>> UpdateAnimalTypeAtAnimal(long animalId, UpdateAnimalTypeAtAnimalDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalService.UpdateAnimalTypeAtAnimalAsync(animalId, dto.OldTypeId, dto.NewTypeId);
 
             return response.StatusCode switch
@@ -149,6 +174,11 @@ namespace ApiContestNew.Controllers
         [HttpDelete("{animalId}/types/{typeId}")]
         public async Task<ActionResult<GetAnimalDto>> DeleteAnimalTypeAtAnimal(long animalId, long typeId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalService.DeleteAnimalTypeAtAnimalAsync(animalId, typeId);
 
             return response.StatusCode switch

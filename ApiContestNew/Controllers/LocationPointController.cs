@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Claims;
 
 namespace ApiContestNew.Controllers
 {
@@ -40,6 +41,11 @@ namespace ApiContestNew.Controllers
         [HttpPost]
         public async Task<ActionResult<GetLocationPointDto>> AddLocationPoint(AddLocationPointDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _locationPointService.AddPointAsync(_mapper.Map<LocationPoint>(dto));
 
             return response.StatusCode switch
@@ -54,6 +60,11 @@ namespace ApiContestNew.Controllers
         [HttpPut("{pointId}")]
         public async Task<ActionResult<GetLocationPointDto>> UpdateLocationPoint(long pointId, UpdateLocationPointDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _locationPointService.UpdatePointAsync(pointId, _mapper.Map<LocationPoint>(dto));
 
             return response.StatusCode switch
@@ -69,6 +80,11 @@ namespace ApiContestNew.Controllers
         [HttpDelete("{pointId}")]
         public async Task<ActionResult<GetLocationPointDto>> DeleteLocationPoint(long pointId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _locationPointService.DeletePointAsync(pointId);
 
             return response.StatusCode switch

@@ -93,7 +93,11 @@ namespace ApiContestNew.Application.Services
             }
 
             var account = await _accountRepository.GetAccountByIdAsync(id);
-            if (account == null)
+            var authorizedEmail = _contextAccessor.HttpContext.User
+                .Claims.Where(c => c.Type == ClaimTypes.Email)
+                .Select(c => c.Value).SingleOrDefault();
+
+            if (account == null || account.Email != authorizedEmail)
             {
                 return new ServiceResponse403<Account>();
             }

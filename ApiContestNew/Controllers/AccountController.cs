@@ -54,6 +54,11 @@ namespace ApiContestNew.Controllers
         [HttpPut("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> UpdateAccount(int accountId, UpdateAccountDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _accountService.UpdateAccountAsync(accountId, _mapper.Map<Account>(dto));
 
             return response.StatusCode switch
@@ -69,6 +74,11 @@ namespace ApiContestNew.Controllers
         [HttpDelete("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> DeleteAccount(int accountId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _accountService.DeleteAccountAsync(accountId);
 
             return response.StatusCode switch
