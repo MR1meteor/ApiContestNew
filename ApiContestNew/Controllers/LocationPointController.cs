@@ -38,14 +38,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN, CHIPPER")]
         [HttpPost]
         public async Task<ActionResult<GetLocationPointDto>> AddLocationPoint(AddLocationPointDto dto)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _locationPointService.AddPointAsync(_mapper.Map<LocationPoint>(dto));
 
             return response.StatusCode switch
@@ -57,14 +53,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN, CHIPPER")]
         [HttpPut("{pointId}")]
         public async Task<ActionResult<GetLocationPointDto>> UpdateLocationPoint(long pointId, UpdateLocationPointDto dto)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _locationPointService.UpdatePointAsync(pointId, _mapper.Map<LocationPoint>(dto));
 
             return response.StatusCode switch
@@ -77,14 +69,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{pointId}")]
         public async Task<ActionResult<GetLocationPointDto>> DeleteLocationPoint(long pointId)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _locationPointService.DeletePointAsync(pointId);
 
             return response.StatusCode switch

@@ -65,6 +65,12 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse404<LocationPoint>();
             }
 
+            if (editablePoint.AnimalVisitedLocation.Count > 0 ||
+                editablePoint.ChippedAnimals.Count > 0)
+            {
+                return new ServiceResponse400<LocationPoint>();
+            }
+
             var equalPoint = await _locationPointRepository.GetPointByCoordsAsync(point.Latitude, point.Longitude);
             if(equalPoint != null)
             {
