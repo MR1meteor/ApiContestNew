@@ -63,14 +63,14 @@ namespace ApiContestNew.Controllers
 
             if (dto.AnimalTypes.Length <= 0)
             {
-                BadRequest();
+                return BadRequest();
             }
 
             var types = (await _animalTypeService.GetAnimalTypesByIdsAsync(dto.AnimalTypes)).Data;
 
-            if (types.Count <= dto.AnimalTypes.Length)
+            if (types.Count < dto.AnimalTypes.Length)
             {
-                NotFound();
+                return NotFound();
             }
 
             animal.AnimalTypes = types;
