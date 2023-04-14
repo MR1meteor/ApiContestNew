@@ -27,16 +27,16 @@ namespace ApiContestNew.Core.Handlers
         protected async override  Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var authorizationHeader = Request.Headers["Authorization"].ToString();
-            if (string.IsNullOrWhiteSpace(authorizationHeader))
-            {
-                return await Task.FromResult(AuthenticateResult.Success(
-                    new AuthenticationTicket(new ClaimsPrincipal(
-                        new ClaimsIdentity(
-                            new[] { 
-                                new Claim(ClaimTypes.Email, string.Empty),
-                                new Claim(ClaimTypes.Role, string.Empty) 
-                            }, "Basic")), Scheme.Name)));
-            }
+            //if (string.IsNullOrWhiteSpace(authorizationHeader))
+            //{
+            //    return await Task.FromResult(AuthenticateResult.Success(
+            //        new AuthenticationTicket(new ClaimsPrincipal(
+            //            new ClaimsIdentity(
+            //                new[] { 
+            //                    new Claim(ClaimTypes.Email, string.Empty),
+            //                    new Claim(ClaimTypes.Role, string.Empty) 
+            //                }, "Basic")), Scheme.Name)));
+            //}
 
             if (authorizationHeader != null &&
                 authorizationHeader.StartsWith("basic", StringComparison.OrdinalIgnoreCase))

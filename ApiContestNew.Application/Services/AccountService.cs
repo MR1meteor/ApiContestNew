@@ -73,15 +73,6 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse400<Account>();
             }
 
-            var claims = _contextAccessor.HttpContext.User.Claims;
-            var authorizedRole = claims.Where(c => c.Type == ClaimTypes.Role)
-                .Select(c => c.Value).SingleOrDefault();
-
-            if (authorizedRole != "ADMIN")
-            {
-                return new ServiceResponse403<Account>();
-            }
-
             var equalAccount = await _accountRepository.GetAccountByEmailAsync(account.Email);
             if (equalAccount != null)
             {
@@ -95,26 +86,32 @@ namespace ApiContestNew.Application.Services
 
         async public Task<ServiceResponse<Account>> UpdateAccountAsync(int id, Account account)
         {
+            var roles = new[] { "ADMIN", "CHIPPER", "USER" };
+
             account.Id = id;
-            if (!account.IsValid())
+            if (!account.IsValid() ||
+                !roles.Contains(account.Role))
             {
                 return new ServiceResponse400<Account>();
             }
 
             var editableAccount = await _accountRepository.GetAccountByIdAsync(id);
             var claims = _contextAccessor.HttpContext.User.Claims;
-            
-            if (editableAccount == null || claims.Count() <= 0)
+            var authorizedEmail = claims.Where(c => c.Type == ClaimTypes.Email)
+                .Select(c => c.Value).SingleOrDefault();
+            var authorizedRole = claims.Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).SingleOrDefault();
+
+            if (editableAccount == null && authorizedRole != "ADMIN" ||
+                editableAccount != null && authorizedRole != "ADMIN" &&
+                editableAccount.Email != authorizedEmail)
             {
                 return new ServiceResponse403<Account>();
             }
 
-            var authorizedEmail = claims.Where(c => c.Type == ClaimTypes.Email)
-                .Select(c => c.Value).SingleOrDefault();
-
-            if (editableAccount.Email != authorizedEmail)
+            if (editableAccount == null)
             {
-                return new ServiceResponse403<Account>();
+                return new ServiceResponse404<Account>();
             }
 
             var equalAccount = await _accountRepository.GetAccountByEmailAsync(account.Email);
@@ -136,13 +133,23 @@ namespace ApiContestNew.Application.Services
             }
 
             var account = await _accountRepository.GetAccountByIdAsync(id);
-            var authorizedEmail = _contextAccessor.HttpContext.User
-                .Claims.Where(c => c.Type == ClaimTypes.Email)
+
+            var claims = _contextAccessor.HttpContext.User.Claims;
+            var authorizedEmail = claims.Where(c => c.Type == ClaimTypes.Email)
+                .Select(c => c.Value).SingleOrDefault();
+            var authorizedRole = claims.Where(c => c.Type == ClaimTypes.Role)
                 .Select(c => c.Value).SingleOrDefault();
 
-            if (account == null || account.Email != authorizedEmail)
+            if (account == null && authorizedRole != "ADMIN" ||
+                account != null && authorizedRole != "ADMIN" &&
+                account.Email != authorizedEmail)
             {
                 return new ServiceResponse403<Account>();
+            }
+
+            if (account == null)
+            {
+                return new ServiceResponse404<Account>();
             }
 
             if (account.ChippedAnimals.Count != 0)
