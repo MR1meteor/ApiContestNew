@@ -9,6 +9,8 @@
         public List<AnimalVisitedLocation> AnimalVisitedLocation { get; set; } = new();
         public List<Animal> ChippedAnimals { get; set; } = new();
 
+        public ICollection<Area> Areas { get; set; } = new List<Area>();
+
         public LocationPoint()
         {
 
