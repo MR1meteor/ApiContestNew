@@ -15,5 +15,40 @@ namespace ApiContestNew.Infrastructure.Data
         { 
         
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>().HasData(
+                new Account
+                {
+                    Id = 1,
+                    FirstName = "adminFirstName",
+                    LastName = "adminLastName",
+                    Email = "admin@simbirsoft.com",
+                    Password = "qwerty123",
+                    Role = "ADMIN"
+                },
+                
+                new Account
+                {
+                    Id = 2,
+                    FirstName = "chipperFirstName",
+                    LastName = "chipperLastName",
+                    Email = "chipper@simbirsoft.com",
+                    Password = "qwerty123",
+                    Role = "CHIPPER"
+                },
+
+                new Account
+                {
+                    Id = 3,
+                    FirstName = "userFirstName",
+                    LastName = "userLastName",
+                    Email = "user@simbirsoft.com",
+                    Password = "qwerty123",
+                    Role = "USER"
+                }
+                );
+        }
     }
 }
