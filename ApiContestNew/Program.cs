@@ -8,11 +8,15 @@ using ApiContestNew.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using ApiContestNew.Core.Handlers;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddJsonOptions(x => 
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // HttpContext
 builder.Services.AddHttpContextAccessor();
@@ -26,6 +30,7 @@ builder.Services.AddScoped
     ApiContestNew.Application.Services.AuthenticationService>();
 builder.Services.AddScoped<IAnimalVisitedLocationService, AnimalVisitedLocationService>();
 builder.Services.AddScoped<IAnimalService, AnimalService>();
+builder.Services.AddScoped<IAreaService, AreaService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();
@@ -34,6 +39,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IAnimalVisitedLocationRepository, AnimalVisitedLocationRepository>();
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
+builder.Services.AddScoped<IAreaRepository, AreaRepository>();
 
 // DBContext
 builder.Services.AddDbContext<DataContext>(
