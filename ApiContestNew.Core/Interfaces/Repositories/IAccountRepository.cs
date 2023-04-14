@@ -8,6 +8,7 @@ namespace ApiContestNew.Core.Interfaces.Repositories
         Task<Account?> GetAccountByIdAsync(int id);
         Task<Account?> GetAccountByEmailAsync(string email);
         Task<List<Account>> GetAccountsByFilterAsync(AccountFilter filter);
+        Task<Account?> AddAccountAsync(Account account);
         Task<Account?> UpdateAccountAsync(Account account);
         Task<Account?> DeleteAccountAsync(Account account);
     }

@@ -29,19 +29,14 @@ namespace ApiContestNew.Infrastructure.Repositories
             return await _accountRepository.GetAccountByEmailAsync(account.Email);
         }
 
-        async public Task<bool> Authenticate(string username, string password)
+        async public Task<Account?> Authenticate(string username, string password)
         {
             string encodedPassword = EncodePassword(password);
 
             var account = await ApplySpecification(new AccountByAuthData(username, encodedPassword))
                 .FirstOrDefaultAsync();
 
-            if (account == null)
-            {
-                return false;
-            }
-
-            return true;
+            return account;
         }
 
         private string EncodePassword(string password)

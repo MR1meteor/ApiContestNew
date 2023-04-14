@@ -8,6 +8,7 @@ namespace ApiContestNew.Core.Interfaces.Services
     {
         Task<ServiceResponse<Account>> GetAccountAsync(int id);
         Task<ServiceResponse<List<Account>>> GetAccountsAsync(AccountFilter accountFilter);
+        Task<ServiceResponse<Account>> AddAccountAsync(Account account);
         Task<ServiceResponse<Account>> UpdateAccountAsync(int id, Account account);
         Task<ServiceResponse<Account>> DeleteAccountAsync(int id);
     }
