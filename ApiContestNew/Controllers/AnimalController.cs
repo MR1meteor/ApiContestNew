@@ -61,7 +61,8 @@ namespace ApiContestNew.Controllers
         {
             var animal = _mapper.Map<Animal>(dto);
 
-            if (dto.AnimalTypes.Length <= 0)
+            if (dto.AnimalTypes.Length <= 0 ||  // TODO: remake that shit.. (+- 15 strings down)
+                dto.AnimalTypes.Min() <= 0)
             {
                 return BadRequest();
             }
