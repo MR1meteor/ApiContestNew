@@ -6,5 +6,6 @@ namespace ApiContestNew.Core.Interfaces.Services
     public interface IAreaService
     {
         Task<ServiceResponse<Area>> GetAreaAsync(long id);
+        Task<ServiceResponse<Area>> AddAreaAsync(Area area);
     }
 }

@@ -37,5 +37,20 @@ namespace ApiContestNew.Controllers
                 _ => StatusCode(500),
             };
         }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost]
+        public async Task<ActionResult<GetAreaDto>> AddArea(AddAreaDto dto)
+        {
+            var response = await _areaService.AddAreaAsync(_mapper.Map<Area>(dto));
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.Created => StatusCode(201, _mapper.Map<GetAreaDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.Conflict => Conflict(),
+                _ => StatusCode(500),
+            };
+        }
     }
 }

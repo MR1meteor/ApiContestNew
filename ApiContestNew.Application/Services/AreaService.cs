@@ -30,5 +30,23 @@ namespace ApiContestNew.Application.Services
 
             return new ServiceResponse200<Area>(data: area);
         }
+
+        async public Task<ServiceResponse<Area>> AddAreaAsync(Area area)
+        {
+            if (!area.IsValidWithoutId())
+            {
+                return new ServiceResponse400<Area>();
+            }
+
+            var equalArea = await _areaRepository.GetAreaByNameAsync(area.Name);
+            if (equalArea != null)
+            {
+                return new ServiceResponse409<Area>();
+            }
+
+            var newArea = await _areaRepository.AddAreaAsync(area);
+
+            return new ServiceResponse201<Area>(data: newArea);
+        }
     }
 }
