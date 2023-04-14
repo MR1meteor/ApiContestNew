@@ -64,7 +64,7 @@ namespace ApiContestNew.Controllers
 
             return response.StatusCode switch
             {
-                HttpStatusCode.OK => StatusCode(201, _mapper.Map<GetAccountDto>(response.Data)),
+                HttpStatusCode.Created => StatusCode(201, _mapper.Map<GetAccountDto>(response.Data)),
                 HttpStatusCode.BadRequest => BadRequest(),
                 HttpStatusCode.Forbidden => StatusCode(403),
                 HttpStatusCode.Conflict => Conflict(),
