@@ -39,6 +39,7 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("search")]
         public async Task<ActionResult<List<GetAccountDto>>> GetAccounts([FromQuery] AccountFilter filter)
         {
@@ -52,14 +53,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult<GetAccountDto>> AddAccount(AddAccountWithRoleDto dto)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _accountService.AddAccountAsync(_mapper.Map<Account>(dto));
 
             return response.StatusCode switch
@@ -75,11 +72,6 @@ namespace ApiContestNew.Controllers
         [HttpPut("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> UpdateAccount(int accountId, UpdateAccountDto dto)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _accountService.UpdateAccountAsync(accountId, _mapper.Map<Account>(dto));
 
             return response.StatusCode switch
@@ -87,6 +79,7 @@ namespace ApiContestNew.Controllers
                 HttpStatusCode.OK => Ok(_mapper.Map<GetAccountDto>(response.Data)),
                 HttpStatusCode.BadRequest => BadRequest(),
                 HttpStatusCode.Forbidden => StatusCode(403),
+                HttpStatusCode.NotFound => NotFound(),
                 HttpStatusCode.Conflict => Conflict(),
                 _ => StatusCode(500),
             };
@@ -95,11 +88,6 @@ namespace ApiContestNew.Controllers
         [HttpDelete("{accountId}")]
         public async Task<ActionResult<GetAccountDto>> DeleteAccount(int accountId)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _accountService.DeleteAccountAsync(accountId);
 
             return response.StatusCode switch
@@ -107,6 +95,7 @@ namespace ApiContestNew.Controllers
                 HttpStatusCode.OK => StatusCode(200),
                 HttpStatusCode.BadRequest => BadRequest(),
                 HttpStatusCode.Forbidden => StatusCode(403),
+                HttpStatusCode.NotFound => NotFound(),
                 _ => StatusCode(500),
             };
         }
