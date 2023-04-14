@@ -41,6 +41,11 @@ namespace ApiContestNew.Controllers
         [HttpPost("{pointId}")]
         public async Task<ActionResult<GetAnimalVisitedLocationDto>> AddAnimalVisitedLocation(long animalId, long pointId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalVisitedLocationService.AddVisitedLocationAsync(animalId, pointId);
 
             return response.StatusCode switch
@@ -55,6 +60,11 @@ namespace ApiContestNew.Controllers
         [HttpPut]
         public async Task<ActionResult<GetAnimalVisitedLocationDto>> UpdateAnimalVisitedLocation(long animalId, UpdateAnimalVisitedLocationDto dto)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalVisitedLocationService.UpdateVisitedLocationAsync(animalId, _mapper.Map<AnimalVisitedLocation>(dto));
 
             return response.StatusCode switch
@@ -69,6 +79,11 @@ namespace ApiContestNew.Controllers
         [HttpDelete("{visitedPointId}")]
         public async Task<ActionResult<GetAnimalVisitedLocationDto>> DeleteAnimalVisitedLocation(long animalId, long visitedPointId)
         {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
             var response = await _animalVisitedLocationService.DeleteVisitedLocationAsync(animalId, visitedPointId);
 
             return response.StatusCode switch
