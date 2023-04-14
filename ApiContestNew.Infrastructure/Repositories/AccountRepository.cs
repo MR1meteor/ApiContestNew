@@ -34,6 +34,16 @@ namespace ApiContestNew.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        async public Task<Account?> AddAccountAsync(Account account)
+        {
+            account.Password = EncodePassword(account.Password);
+
+            _dbContext.Accounts.Add(account);
+            await _dbContext.SaveChangesAsync();
+
+            return await GetAccountByIdAsync(account.Id);
+        }
+
         async public Task<Account?> UpdateAccountAsync(Account account)
         {
             var editableAccount = await GetAccountByIdAsync(account.Id);

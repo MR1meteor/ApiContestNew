@@ -33,6 +33,7 @@ namespace ApiContestNew.Controllers
             {
                 HttpStatusCode.OK => Ok(_mapper.Map<GetAccountDto>(response.Data)),
                 HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.Forbidden => StatusCode(403),
                 HttpStatusCode.NotFound => NotFound(),
                 _ => StatusCode(500),
             };
@@ -47,6 +48,26 @@ namespace ApiContestNew.Controllers
             {
                 HttpStatusCode.OK => Ok(_mapper.Map<List<GetAccountDto>>(response.Data)),
                 HttpStatusCode.BadRequest => BadRequest(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<GetAccountDto>> AddAccount(AddAccountWithRoleDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
+            {
+                return Unauthorized();
+            }
+
+            var response = await _accountService.AddAccountAsync(_mapper.Map<Account>(dto));
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.Created => StatusCode(201, _mapper.Map<GetAccountDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.Forbidden => StatusCode(403),
+                HttpStatusCode.Conflict => Conflict(),
                 _ => StatusCode(500),
             };
         }

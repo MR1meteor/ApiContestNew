@@ -5,6 +5,6 @@ namespace ApiContestNew.Core.Interfaces.Repositories
     public interface IAuthenticationRepository
     {
         Task<Account?> Register(Account account);
-        Task<bool> Authenticate(string username, string password);
+        Task<Account?> Authenticate(string username, string password);
     }
 }

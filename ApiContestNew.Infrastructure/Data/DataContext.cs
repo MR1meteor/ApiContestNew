@@ -1,5 +1,6 @@
 ﻿using ApiContestNew.Core.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace ApiContestNew.Infrastructure.Data
 {
@@ -25,7 +26,7 @@ namespace ApiContestNew.Infrastructure.Data
                     FirstName = "adminFirstName",
                     LastName = "adminLastName",
                     Email = "admin@simbirsoft.com",
-                    Password = "qwerty123",
+                    Password = EncodePassword("qwerty123"),
                     Role = "ADMIN"
                 },
                 
@@ -35,7 +36,7 @@ namespace ApiContestNew.Infrastructure.Data
                     FirstName = "chipperFirstName",
                     LastName = "chipperLastName",
                     Email = "chipper@simbirsoft.com",
-                    Password = "qwerty123",
+                    Password = EncodePassword("qwerty123"),
                     Role = "CHIPPER"
                 },
 
@@ -45,10 +46,17 @@ namespace ApiContestNew.Infrastructure.Data
                     FirstName = "userFirstName",
                     LastName = "userLastName",
                     Email = "user@simbirsoft.com",
-                    Password = "qwerty123",
+                    Password = EncodePassword("qwerty123"),
                     Role = "USER"
                 }
                 );
+        }
+
+        private string EncodePassword(string password)
+        {
+            var bytes = Encoding.UTF8.GetBytes(password);
+            var encodedPassword = Convert.ToBase64String(bytes);
+            return encodedPassword;
         }
     }
 }

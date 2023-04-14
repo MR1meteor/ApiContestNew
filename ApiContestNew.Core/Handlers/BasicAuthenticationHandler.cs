@@ -31,7 +31,11 @@ namespace ApiContestNew.Core.Handlers
             {
                 return await Task.FromResult(AuthenticateResult.Success(
                     new AuthenticationTicket(new ClaimsPrincipal(
-                        new ClaimsIdentity(new[] { new Claim(ClaimTypes.Email, string.Empty) }, "Basic")), Scheme.Name)));
+                        new ClaimsIdentity(
+                            new[] { 
+                                new Claim(ClaimTypes.Email, string.Empty),
+                                new Claim(ClaimTypes.Role, string.Empty) 
+                            }, "Basic")), Scheme.Name)));
             }
 
             if (authorizationHeader != null &&
@@ -40,12 +44,17 @@ namespace ApiContestNew.Core.Handlers
                 var token = authorizationHeader.Substring("Basic ".Length ).Trim();
                 var encodedString = Encoding.UTF8.GetString(Convert.FromBase64String(token));
                 var credentials = encodedString.Split(':');
-                if (await _authenticationRepository.Authenticate(credentials[0], credentials[1]))
+
+                var account = await _authenticationRepository.Authenticate(credentials[0], credentials[1]);
+                if (account != null)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Email, credentials[0]) };
+                    var claims = new[] { 
+                        new Claim(ClaimTypes.Email, credentials[0]),
+                        new Claim(ClaimTypes.Role, account.Role) };
                     var identity = new ClaimsIdentity(claims, "Basic");
                     var claimsPrincipal = new ClaimsPrincipal(identity);
-                    return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
+                    return await Task.FromResult(
+                        AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
                 }
             }
 

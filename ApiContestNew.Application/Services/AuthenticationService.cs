@@ -20,6 +20,8 @@ namespace ApiContestNew.Application.Services
 
         async public Task<ServiceResponse<Account>> Register(Account account)
         {
+            account.Role = "USER";
+
             if (!account.IsValidWithoutId())
             {
                 return new ServiceResponse400<Account>();
