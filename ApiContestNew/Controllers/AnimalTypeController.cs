@@ -37,14 +37,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN, CHIPPER")]
         [HttpPost]
         public async Task<ActionResult<GetAnimalTypeDto>> AddAnimalType(AddAnimalTypeDto dto)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _animalTypeService.AddAnimalTypeAsync(_mapper.Map<AnimalType>(dto));
 
             return response.StatusCode switch
@@ -56,14 +52,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN, CHIPPER")]
         [HttpPut("{typeId}")]
         public async Task<ActionResult<GetAnimalTypeDto>> UpdateAnimalType(long typeId, UpdateAnimalTypeDto dto)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _animalTypeService.UpdateAnimalTypeAsync(typeId, _mapper.Map<AnimalType>(dto));
 
             return response.StatusCode switch
@@ -76,14 +68,10 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{typeId}")]
         public async Task<ActionResult<GetAnimalTypeDto>> DeleteAnimalType(long typeId)
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers.Authorization))
-            {
-                return Unauthorized();
-            }
-
             var response = await _animalTypeService.DeleteAnimalTypeAsync(typeId);
 
             return response.StatusCode switch
