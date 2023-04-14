@@ -52,6 +52,7 @@ namespace ApiContestNew.Infrastructure.Repositories
             editableAccount.LastName = account.LastName;
             editableAccount.Email = account.Email;
             editableAccount.Password = EncodePassword(account.Password);
+            editableAccount.Role = account.Role;
             #pragma warning restore CS8602 // Dereference of a possibly null reference.
             await _dbContext.SaveChangesAsync();
             return await GetAccountByIdAsync(editableAccount.Id);
