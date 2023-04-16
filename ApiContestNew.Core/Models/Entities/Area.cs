@@ -38,11 +38,29 @@
                 return false;
             }
 
-            double equationIndex = 
-                (((List<LocationPoint>)AreaPoints)[0].Longitude - ((List<LocationPoint>)AreaPoints)[1].Longitude) /
-                (((List<LocationPoint>)AreaPoints)[0].Latitude - ((List<LocationPoint>)AreaPoints)[1].Latitude);
-            double equationOffset = 
-                ((List<LocationPoint>)AreaPoints)[1].Longitude - equationIndex * ((List<LocationPoint>)AreaPoints)[1].Latitude;
+            double y1 = ((List<LocationPoint>)AreaPoints)[0].Longitude;
+            double y2 = ((List<LocationPoint>)AreaPoints)[1].Longitude;
+            double x1 = ((List<LocationPoint>)AreaPoints)[0].Latitude;
+            double x2 = ((List<LocationPoint>)AreaPoints)[1].Latitude;
+
+            if (y1 - y2 == 0)
+            {
+                if (((List<LocationPoint>)AreaPoints)[2].Longitude == y1)
+                {
+                    return false;
+                }
+            }
+
+            if (x1 - x2 == 0)
+            {
+                if (((List<LocationPoint>)AreaPoints)[2].Latitude == x1)
+                {
+                    return false;
+                }
+            }
+
+            double equationIndex = (y1 - y2) / (x1 - x2);
+            double equationOffset = y2 - equationIndex * x2;
 
             bool oneLine = true;
             foreach (var point in AreaPoints)
