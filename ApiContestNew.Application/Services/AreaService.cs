@@ -48,5 +48,23 @@ namespace ApiContestNew.Application.Services
 
             return new ServiceResponse201<Area>(data: newArea);
         }
+
+        async public Task<ServiceResponse<Area>> DeleteAreaAsync(long id)
+        {
+            if (id <= 0)
+            {
+                return new ServiceResponse400<Area>();
+            }
+            
+            var area = await _areaRepository.GetAreaByIdAsync(id);
+            if(area == null)
+            {
+                return new ServiceResponse404<Area>();
+            }
+
+            await _areaRepository.DeleteAreaAsync(area);
+
+            return new ServiceResponse200<Area>();
+        }
     }
 }

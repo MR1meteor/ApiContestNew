@@ -33,5 +33,13 @@ namespace ApiContestNew.Infrastructure.Repositories
 
             return await GetAreaByIdAsync(area.Id);
         }
+
+        public async Task<Area?> DeleteAreaAsync(Area area)
+        {
+            _dbContext.Areas.Remove(area);
+            await _dbContext.SaveChangesAsync();
+
+            return null;
+        }
     }
 }
