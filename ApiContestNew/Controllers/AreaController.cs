@@ -52,5 +52,20 @@ namespace ApiContestNew.Controllers
                 _ => StatusCode(500),
             };
         }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpDelete("{areaId}")]
+        public async Task<ActionResult<GetAreaDto>> DeleteArea(long areaId)
+        {
+            var response = await _areaService.DeleteAreaAsync(areaId);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(_mapper.Map<GetAreaDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => StatusCode(500),
+            };
+        }
     }
 }
