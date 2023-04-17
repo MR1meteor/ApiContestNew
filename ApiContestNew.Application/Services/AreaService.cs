@@ -84,53 +84,114 @@ namespace ApiContestNew.Application.Services
         {
             bool inside = false;
 
-            for (int i = 0; i < areaPoints.Count - 1; i++)
+            //for (int i = 0; i < areaPoints.Count; i++)
+            //{
+            //    if (i == areaPoints.Count - 1)
+            //    {
+            //        if (areaPoints[i].Longitude >= point.Longitude && point.Longitude >= areaPoints[0].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[0].Latitude ||
+            //            areaPoints[i].Latitude >= areaPoints[0].Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[0].Latitude
+            //            ) ||
+
+            //            areaPoints[0].Longitude >= point.Longitude && point.Longitude >= areaPoints[i].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[0].Latitude ||
+            //            areaPoints[i].Latitude >= areaPoints[0].Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[0].Latitude
+            //            )
+            //           )
+            //        {
+            //            inside = !inside;
+            //        }
+
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        if (areaPoints[i].Longitude >= point.Longitude && point.Longitude >= areaPoints[i + 1].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[i + 1].Latitude ||
+            //            areaPoints[i].Latitude >= areaPoints[i + 1].Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[i + 1].Latitude
+            //            ) ||
+
+            //            areaPoints[i + 1].Longitude >= point.Longitude && point.Longitude >= areaPoints[i].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[i + 1].Latitude ||
+            //            areaPoints[i].Latitude >= areaPoints[i + 1].Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[i + 1].Latitude
+            //            )
+            //           ) // TODO: My Fucking God... REDO THIS SOMEHOW!!!!!!
+            //        {
+            //            inside = !inside;
+            //        }
+            //    }
+            //}
+
+            //for (int i = 0; i < areaPoints.Count; i++)
+            //{
+            //    if (i == areaPoints.Count - 1)
+            //    {
+            //        if (areaPoints[i].Longitude >= point.Longitude && point.Longitude >= areaPoints[0].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude > point.Latitude && point.Latitude > areaPoints[0].Latitude ||
+            //            areaPoints[i].Latitude > areaPoints[0].Latitude && point.Latitude > areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude > point.Latitude && point.Latitude > areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude > areaPoints[i].Latitude && point.Latitude > areaPoints[0].Latitude
+            //            ) ||
+
+            //            areaPoints[0].Longitude > point.Longitude && point.Longitude >= areaPoints[i].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude > point.Latitude && point.Latitude >= areaPoints[0].Latitude ||
+            //            areaPoints[i].Latitude > areaPoints[0].Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude > point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
+            //            areaPoints[0].Latitude > areaPoints[i].Latitude && point.Latitude >= areaPoints[0].Latitude
+            //            )
+            //           )
+            //        {
+            //            inside = !inside;
+            //        }
+
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        if (areaPoints[i].Longitude > point.Longitude && point.Longitude > areaPoints[i + 1].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude > point.Latitude && point.Latitude > areaPoints[i + 1].Latitude ||
+            //            areaPoints[i].Latitude > areaPoints[i + 1].Latitude && point.Latitude > areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude > point.Latitude && point.Latitude > areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude > areaPoints[i].Latitude && point.Latitude > areaPoints[i + 1].Latitude
+            //            ) ||
+
+            //            areaPoints[i + 1].Longitude > point.Longitude && point.Longitude >= areaPoints[i].Longitude &&
+            //            (
+            //            areaPoints[i].Latitude > point.Latitude && point.Latitude > areaPoints[i + 1].Latitude ||
+            //            areaPoints[i].Latitude > areaPoints[i + 1].Latitude && point.Latitude > areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude > point.Latitude && point.Latitude > areaPoints[i].Latitude ||
+            //            areaPoints[i + 1].Latitude > areaPoints[i].Latitude && point.Latitude > areaPoints[i + 1].Latitude
+            //            )
+            //           ) // TODO: My Fucking God... REDO THIS SOMEHOW!!!!!!
+            //        {
+            //            inside = !inside;
+            //        }
+            //    }
+            //}
+
+            for (int i = 0, j = areaPoints.Count - 1; i < areaPoints.Count; j = i++)
             {
-                if (i == areaPoints.Count - 2)
+                if ((((areaPoints[i].Longitude <= point.Longitude) && (point.Longitude < areaPoints[j].Longitude)) || ((areaPoints[j].Longitude <= point.Longitude) && (point.Longitude < areaPoints[i].Longitude))) && 
+                    (((areaPoints[j].Longitude - areaPoints[i].Longitude) != 0)
+                    && (point.Latitude > ((areaPoints[j].Latitude - areaPoints[i].Latitude) * (point.Longitude - areaPoints[i].Longitude)
+                    / (areaPoints[j].Longitude - areaPoints[i].Longitude) + areaPoints[i].Latitude))))
                 {
-                    if (areaPoints[i].Longitude >= point.Longitude && point.Longitude >= areaPoints[0].Longitude &&
-                        (
-                        areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[0].Latitude ||
-                        areaPoints[i].Latitude >= areaPoints[0].Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[0].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[0].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[0].Latitude
-                        ) ||
-
-                        areaPoints[0].Longitude >= point.Longitude && point.Longitude >= areaPoints[i].Longitude &&
-                        (
-                        areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[0].Latitude ||
-                        areaPoints[i].Latitude >= areaPoints[0].Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[0].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[0].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[0].Latitude
-                        )
-                       )
-                    {
-                        inside = !inside;
-                    }
-
-                    break;
-                }
-                else
-                {
-                    if (areaPoints[i].Longitude >=  point.Longitude && point.Longitude >= areaPoints[i + 1].Longitude &&
-                        (
-                        areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[i + 1].Latitude ||
-                        areaPoints[i].Latitude >= areaPoints[i + 1].Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[i + 1].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[i + 1].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[i + 1].Latitude
-                        ) ||
-
-                        areaPoints[i + 1].Longitude >= point.Longitude && point.Longitude >= areaPoints[i].Longitude &&
-                        (
-                        areaPoints[i].Latitude >= point.Latitude && point.Latitude >= areaPoints[i + 1].Latitude ||
-                        areaPoints[i].Latitude >= areaPoints[i + 1].Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[i + 1].Latitude >= point.Latitude && point.Latitude >= areaPoints[i].Latitude ||
-                        areaPoints[i + 1].Latitude >= areaPoints[i].Latitude && point.Latitude >= areaPoints[i + 1].Latitude
-                        )
-                       ) // TODO: My Fucking God... REDO THIS SOMEHOW!!!!!!
-                    {
-                        inside = !inside;
-                    }
+                    inside = !inside;
                 }
             }
 
