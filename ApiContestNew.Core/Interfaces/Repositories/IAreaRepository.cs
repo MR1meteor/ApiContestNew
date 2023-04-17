@@ -4,6 +4,7 @@ namespace ApiContestNew.Core.Interfaces.Repositories
 {
     public interface IAreaRepository
     {
+        Task<List<Area>> GetAllAsync();
         Task<Area?> GetAreaByIdAsync(long id);
         Task<Area?> GetAreaByNameAsync(string name);
         Task<Area?> AddAreaAsync(Area area);

@@ -14,6 +14,11 @@ namespace ApiContestNew.Infrastructure.Repositories
 
         }
 
+        public async Task<List<Area>> GetAllAsync()
+        {
+            return await _dbContext.Areas.Include(a => a.AreaPoints).ToListAsync();
+        }
+
         public async Task<Area?> GetAreaByIdAsync(long id)
         {
            return await ApplySpecification(new AreaByIdWithPoints(id))
