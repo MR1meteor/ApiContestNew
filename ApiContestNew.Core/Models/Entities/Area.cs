@@ -57,7 +57,7 @@
                 {
                     return false;
                 }
-            }
+            } // TODO: Wrong solution.. (Checking only 3 points)
 
             double equationIndex = (y1 - y2) / (x1 - x2);
             double equationOffset = y2 - equationIndex * x2;
