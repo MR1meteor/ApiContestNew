@@ -110,6 +110,20 @@ namespace ApiContestNew.Application.Services
                 {
                     if (IsPointOnLine(point, areaPoints[i], areaPoints[i + 1]))
                     {
+                        double x3 = i + 2 > areaPoints.Count - 1 ? areaPoints[0].Latitude : areaPoints[i + 2].Latitude;
+                        double y3 = i + 2 > areaPoints.Count - 1 ? areaPoints[0].Longitude : areaPoints[i + 2].Longitude;
+
+                        if (areaPoints[i].Latitude > point.Latitude && x3 > point.Latitude &&
+                            (
+                            areaPoints[i].Longitude > point.Longitude && point.Longitude > y3 ||
+                            y3 > point.Longitude && point.Longitude > areaPoints[i].Longitude
+                            )
+                            )
+                        {
+                            i++;
+                            inside = !inside;
+                        }
+
                         continue;
                     }
 
