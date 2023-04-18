@@ -39,6 +39,7 @@ namespace ApiContestNew.Helpers
             // Area
             CreateMap<Area, GetAreaDto>();
             CreateMap<AddAreaDto, Area>();
+            CreateMap<UpdateAreaDto, Area>();
 
             // Location point
             CreateMap<LocationPoint, GetLocationPointDto>();

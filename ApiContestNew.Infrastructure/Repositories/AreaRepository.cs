@@ -39,6 +39,18 @@ namespace ApiContestNew.Infrastructure.Repositories
             return await GetAreaByIdAsync(area.Id);
         }
 
+        public async Task<Area?> UpdateAreaAsync(Area area)
+        {
+            var editedArea = await GetAreaByIdAsync(area.Id);
+
+            editedArea.Name = area.Name;
+            editedArea.AreaPoints = area.AreaPoints;
+
+            await _dbContext.SaveChangesAsync();
+
+            return await GetAreaByIdAsync(area.Id);
+        }
+
         public async Task<Area?> DeleteAreaAsync(Area area)
         {
             _dbContext.Areas.Remove(area);

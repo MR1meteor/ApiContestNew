@@ -54,6 +54,22 @@ namespace ApiContestNew.Controllers
         }
 
         [Authorize(Roles = "ADMIN")]
+        [HttpPut("{areaId}")]
+        public async Task<ActionResult<GetAreaDto>> UpdateArea(long areaId, UpdateAreaDto dto)
+        {
+            var response = await _areaService.UpdateAreaAsync(areaId, _mapper.Map<Area>(dto));
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(_mapper.Map<GetAreaDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(_mapper.Map<GetAreaDto>(response.Data)),
+                HttpStatusCode.NotFound => NotFound(),
+                HttpStatusCode.Conflict => Conflict(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{areaId}")]
         public async Task<ActionResult<GetAreaDto>> DeleteArea(long areaId)
         {
