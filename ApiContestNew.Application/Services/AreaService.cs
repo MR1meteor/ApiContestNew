@@ -101,6 +101,11 @@ namespace ApiContestNew.Application.Services
 
             foreach (var thisArea in areas)
             {
+                if (thisArea.Id == id)
+                {
+                    continue;
+                }
+
                 foreach (var point in area.AreaPoints)
                 {
                     if (IsPointInsideArea(point, (List<LocationPoint>)thisArea.AreaPoints))
