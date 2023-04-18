@@ -47,7 +47,7 @@ namespace ApiContestNew.Controllers
             return response.StatusCode switch
             {
                 HttpStatusCode.Created => StatusCode(201, _mapper.Map<GetAreaDto>(response.Data)),
-                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.BadRequest => BadRequest(_mapper.Map<GetAreaDto>(response.Data)),
                 HttpStatusCode.Conflict => Conflict(),
                 _ => StatusCode(500),
             };
