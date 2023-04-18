@@ -76,6 +76,53 @@ namespace ApiContestNew.Application.Services
             return new ServiceResponse201<Area>(data: newArea);
         }
 
+        async public Task<ServiceResponse<Area>> UpdateAreaAsync(long id, Area area)
+        {
+            area.Id = id;
+            
+            if (!area.IsValid())
+            {
+                return new ServiceResponse400<Area>();
+            }
+
+            var editableArea = await _areaRepository.GetAreaByIdAsync(id);
+            if (editableArea == null)
+            {
+                return new ServiceResponse404<Area>();
+            }
+
+            var equalArea = await _areaRepository.GetAreaByNameAsync(area.Name);
+            if (equalArea != null)
+            {
+                return new ServiceResponse409<Area>();
+            }
+
+            var areas = await _areaRepository.GetAllAsync();
+
+            foreach (var thisArea in areas)
+            {
+                foreach (var point in area.AreaPoints)
+                {
+                    if (IsPointInsideArea(point, (List<LocationPoint>)thisArea.AreaPoints))
+                    {
+                        return new ServiceResponse<Area>(data: thisArea, statusCode: System.Net.HttpStatusCode.BadRequest);
+                    }
+                }
+
+                foreach (var point in thisArea.AreaPoints)
+                {
+                    if (IsPointInsideArea(point, (List<LocationPoint>)area.AreaPoints))
+                    {
+                        return new ServiceResponse<Area>(data: thisArea, statusCode: System.Net.HttpStatusCode.BadRequest);
+                    }
+                }
+            }
+
+            var editedArea = await _areaRepository.UpdateAreaAsync(area);
+
+            return new ServiceResponse200<Area>(data: editedArea);
+        }
+
         async public Task<ServiceResponse<Area>> DeleteAreaAsync(long id)
         {
             if (id <= 0)
