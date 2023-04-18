@@ -38,6 +38,11 @@
                 return false;
             }
 
+            //if (AreaIntersect((List<LocationPoint>)AreaPoints))
+            //{
+            //    return false;
+            //}
+
             double y1 = ((List<LocationPoint>)AreaPoints)[0].Longitude;
             double y2 = ((List<LocationPoint>)AreaPoints)[1].Longitude;
             double x1 = ((List<LocationPoint>)AreaPoints)[0].Latitude;
@@ -85,5 +90,28 @@
 
             return true;
         }
+
+        //private bool LinesCrossing()
+        //{
+            
+        //}
+
+        //private bool AreaSelfCrossing(List<LocationPoint> polygon)
+        //{
+        //    int n = polygon.Count;
+
+        //    for (int i = 0; i < n; ++i)
+        //    {
+        //        for (int j = i + 1; j < n; ++j)
+        //        {
+        //            if (LinesIntersect(polygon[i], polygon[(i + 1) % n], polygon[j], polygon[(j + 1) % n]))
+        //            {
+        //                return true;
+        //            }
+        //        }
+        //    }
+
+        //    return false;
+        //}
     }
 }
