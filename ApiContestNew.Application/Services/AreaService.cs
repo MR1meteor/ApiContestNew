@@ -61,6 +61,14 @@ namespace ApiContestNew.Application.Services
                         return new ServiceResponse<Area>(data: thisArea, statusCode: System.Net.HttpStatusCode.BadRequest);
                     }
                 }
+
+                foreach (var point in thisArea.AreaPoints)
+                {
+                    if (IsPointInsideArea(point, (List<LocationPoint>)area.AreaPoints))
+                    {
+                        return new ServiceResponse<Area>(data: thisArea, statusCode: System.Net.HttpStatusCode.BadRequest);
+                    }
+                }
             }
 
             var newArea = await _areaRepository.AddAreaAsync(area);
