@@ -6,7 +6,7 @@ namespace ApiContestNew.Core.Specifications.AnimalVisitedLocation
     {
         public LocationByAnimalAndFilterWithAll(Models.Entities.Animal animal, AnimalVisitedLocationFilter filter)
             : base(l =>
-            l.Animals.Contains(animal) &&
+            l.Animal == animal &&
             (filter.StartDateTime == null || filter.StartDateTime <= l.DateTimeOfVisitLocationPoint) &&
             (filter.EndDateTime == null || filter.EndDateTime >= l.DateTimeOfVisitLocationPoint))
         {

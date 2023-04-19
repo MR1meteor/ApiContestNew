@@ -1,6 +1,7 @@
 ﻿using ApiContestNew.Core.Interfaces.Repositories;
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Dtos.Account;
+using ApiContestNew.Dtos.Analytics;
 using ApiContestNew.Dtos.Animal;
 using ApiContestNew.Dtos.AnimalType;
 using ApiContestNew.Dtos.AnimalVisitedLocation;
@@ -40,6 +41,10 @@ namespace ApiContestNew.Helpers
             CreateMap<Area, GetAreaDto>();
             CreateMap<AddAreaDto, Area>();
             CreateMap<UpdateAreaDto, Area>();
+
+            // Analytics
+            CreateMap<AreaAnalytics, GetAreaAnalyticsDto>();
+            CreateMap<AnimalAnalytics, GetAnimalAnalyticsDto>();
 
             // Location point
             CreateMap<LocationPoint, GetLocationPointDto>();

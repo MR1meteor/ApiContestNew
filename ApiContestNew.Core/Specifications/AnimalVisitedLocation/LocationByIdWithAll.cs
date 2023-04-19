@@ -6,7 +6,7 @@
             : base(l => l.Id == id)
         {
             AddInclude(l => l.LocationPoint);
-            AddInclude(l => l.Animals);
+            AddInclude(l => l.Animal);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ApiContestNew.Core.Models.Entities
         public long LocationPointId { get; set; }
         public LocationPoint LocationPoint { get; set; } = new();
 
-        public ICollection<Animal> Animals { get; set; } = new List<Animal>();
+        public Animal Animal { get; set; } = new();
         
         public AnimalVisitedLocation()
         {
