@@ -15,6 +15,13 @@ namespace ApiContestNew.Infrastructure.Repositories
 
         }
 
+        public async Task<List<Animal>> GetAllAsync()
+        {
+            return await _dbContext.Animals.Include(a => a.Chipper)
+                .Include(a => a.ChippingLocation).Include(a => a.AnimalTypes)
+                .Include(a => a.VisitedLocations).ThenInclude(l => l.LocationPoint).ToListAsync();
+        }
+
         public async Task<Animal?> GetAnimalByIdAsync(long id)
         {
             return await ApplySpecification(new AnimalByIdWithAll(id))

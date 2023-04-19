@@ -3,12 +3,14 @@ using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Dtos.Account;
 using ApiContestNew.Dtos.Analytics;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ApiContestNew.Controllers
 {
+    [Authorize]
     [Route("")]
     [ApiController]
     public class AreaAnalyticsController : ControllerBase
@@ -23,7 +25,7 @@ namespace ApiContestNew.Controllers
         }
 
         [HttpGet("areas/{areaId}/analytics")]
-        public async Task<ActionResult<GetAreaAnalyticsDto>> GetAreaAnalytics(long areaId, AreaAnalyticsFilter filter)
+        public async Task<ActionResult<GetAreaAnalyticsDto>> GetAreaAnalytics(long areaId, [FromQuery]AreaAnalyticsFilter filter)
         {
             var response = await _areaAnalyticsService.GetAnalyticsAsync(areaId, filter);
 

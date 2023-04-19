@@ -12,10 +12,14 @@ namespace ApiContestNew.Application.Services
     public class AreaService : IAreaService
     {
         private readonly IAreaRepository _areaRepository;
+        private readonly ILocationPointRepository _locationPointRepository;
 
-        public AreaService(IAreaRepository areaRepository)
+        public AreaService(
+            IAreaRepository areaRepository,
+            ILocationPointRepository locationPointRepository)
         {
             _areaRepository = areaRepository;
+            _locationPointRepository = locationPointRepository;
         }
 
         async public Task<ServiceResponse<Area>> GetAreaAsync(long id)
@@ -141,7 +145,19 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse404<Area>();
             }
 
+            List<LocationPoint> areaPoints = (List<LocationPoint>)area.AreaPoints;
+
             await _areaRepository.DeleteAreaAsync(area);
+
+            foreach (var point in areaPoints)
+            {
+                if (point.Areas.Count <= 0 &&
+                    point.AnimalVisitedLocation.Count <= 0 &&
+                    point.ChippedAnimals.Count <= 0)
+                {
+                    await _locationPointRepository.DeletePointAsync(point);
+                }
+            }
 
             return new ServiceResponse200<Area>();
         }

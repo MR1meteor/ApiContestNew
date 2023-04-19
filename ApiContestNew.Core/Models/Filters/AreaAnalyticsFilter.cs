@@ -7,7 +7,9 @@
 
         public bool IsValid()
         {
-            if (StartDate >= EndDate)
+            if (StartDate != null &&
+                EndDate != null &&
+                StartDate >= EndDate)
             {
                 return false;
             }

@@ -267,6 +267,28 @@
         //return inside;
     //}
 
+        public static bool IsPointOnArea(LocationPoint point, Area area)
+        {
+            if (IsPointOnLine(point,
+                ((List<LocationPoint>)area.AreaPoints)[area.AreaPoints.Count - 1],
+                ((List<LocationPoint>)area.AreaPoints)[0]))
+            {
+                return true;
+            }
+
+            for (int i = 0; i < area.AreaPoints.Count - 1; i++)
+            {
+                if (IsPointOnLine(point,
+                    ((List<LocationPoint>)area.AreaPoints)[i],
+                    ((List<LocationPoint>)area.AreaPoints)[i + 1]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static bool IsPointOnLine(LocationPoint point, LocationPoint p1, LocationPoint p2)
         {
             double h1 = Math.Pow(Math.Pow(p1.Latitude - point.Latitude, 2) + Math.Pow(p1.Longitude - point.Longitude, 2), 0.5);
