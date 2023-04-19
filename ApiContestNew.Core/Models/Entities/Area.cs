@@ -28,7 +28,7 @@
             return true;
         }
 
-        public bool IsValidWithoutId() // TODO: Add other requires validation
+        public bool IsValidWithoutId()
         {
             if (string.IsNullOrWhiteSpace(Name) ||
                 AreaPoints == null ||
@@ -62,7 +62,7 @@
                 {
                     return false;
                 }
-            } // TODO: Wrong solution.. (Checking only 3 points)
+            } // TODO: Wrong solution..
 
             double equationIndex = (y1 - y2) / (x1 - x2);
             double equationOffset = y2 - equationIndex * x2;

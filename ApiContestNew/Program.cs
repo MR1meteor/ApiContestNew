@@ -32,6 +32,7 @@ builder.Services.AddScoped
 builder.Services.AddScoped<IAnimalVisitedLocationService, AnimalVisitedLocationService>();
 builder.Services.AddScoped<IAnimalService, AnimalService>();
 builder.Services.AddScoped<IAreaService, AreaService>();
+builder.Services.AddScoped<IAreaAnalyticsService, AreaAnalyticsService>();
 
 // Repositories
 builder.Services.AddScoped<ILocationPointRepository, LocationPointRepository>();
@@ -81,18 +82,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<DataContext>();
-    context.Database.EnsureDeleted();
-    context.Database.Migrate();
-    //if (context.Database.GetPendingMigrations().Any())
-    //{
-    //    context.Database.EnsureDeleted();
-    //    context.Database.Migrate();
-    //}
-}
+//    var context = services.GetRequiredService<DataContext>();
+//    context.Database.EnsureDeleted();
+//    context.Database.Migrate();
+//    //if (context.Database.GetPendingMigrations().Any())
+//    //{
+//    //    context.Database.EnsureDeleted();
+//    //    context.Database.Migrate();
+//    //}
+//}
 
 app.Run();

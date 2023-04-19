@@ -15,6 +15,12 @@ namespace ApiContestNew.Infrastructure.Repositories
 
         }
 
+        public async Task<List<AnimalVisitedLocation>> GetAllAsync()
+        {
+            return await _dbContext.AnimalVisitedLocations.Include(l => l.LocationPoint)
+                .Include(l => l.Animal).ToListAsync();
+        }
+
         public async Task<AnimalVisitedLocation?> GetLocationByIdAsync(long id)
         {
             return await ApplySpecification(new LocationByIdWithAll(id))
@@ -24,6 +30,12 @@ namespace ApiContestNew.Infrastructure.Repositories
         public async Task<List<AnimalVisitedLocation>> GetLocationsByAnimalAndFilterAsync(Animal animal, AnimalVisitedLocationFilter filter)
         {
             return await ApplySpecification(new LocationByAnimalAndFilterWithAll(animal, filter))
+                .ToListAsync();
+        }
+
+        public async Task<List<AnimalVisitedLocation>> GetLocationsByTimeAsync(DateTimeOffset? startTime, DateTimeOffset? endTime)
+        {
+            return await ApplySpecification(new LocationsByTimeWithAll(startTime, endTime))
                 .ToListAsync();
         }
 
@@ -55,5 +67,7 @@ namespace ApiContestNew.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return null;
         }
+
+        
     }
 }
