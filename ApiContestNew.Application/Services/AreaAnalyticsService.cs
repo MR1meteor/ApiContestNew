@@ -60,14 +60,47 @@ namespace ApiContestNew.Application.Services
 
             List<Animal> animalsGone = new();
             List<Animal> animalsArrived = new();
-            int animalsGoneCount = 0;
-            int animalsArrivedCount = 0;
 
             foreach (var location in locationsInsideArea)
             {
+                var animal = location.Animal;
+                var locationIndex = 0;
+                for (locationIndex = 0; locationIndex < animal.AnimalTypes.Count; locationIndex++)
+                {
+                    if (((List<AnimalVisitedLocation>)animal.VisitedLocations)[locationIndex] == location)
+                    {
+                        break;
+                    }
+                }
+
+                if (animal.VisitedLocations.Count > locationIndex + 1 &&
+                    !LocationPoint.IsPointInsideArea(
+                    ((List<AnimalVisitedLocation>)animal.VisitedLocations).ElementAt(locationIndex + 1).LocationPoint,
+                    (List<LocationPoint>)area.AreaPoints) &&
+                    (location.DateTimeOfVisitLocationPoint <= filter.EndDate || filter.EndDate == null) &&
+                    !animalsGone.Contains(animal))
+                {
+                    animalsGone.Add(animal);
+                }
+
+                if (locationIndex >= 1 &&
+                    !LocationPoint.IsPointInsideArea(
+                    ((List<AnimalVisitedLocation>)animal.VisitedLocations).ElementAt(locationIndex - 1).LocationPoint,
+                    (List<LocationPoint>)area.AreaPoints) &&
+                    (location.DateTimeOfVisitLocationPoint >= filter.StartDate || filter.StartDate == null) &&
+                    !animalsArrived.Contains(animal))
+                {
+                    animalsArrived.Add(animal);
+                }
             }
 
-            throw new NotImplementedException();
+            var analytics = new AreaAnalytics
+            {
+                TotalAnimalsArrived = animalsArrived.Count,
+                TotalAnimalsGone = animalsGone.Count,
+            };
+
+            return new ServiceResponse200<AreaAnalytics>(data: analytics);
         }
     }
 }
