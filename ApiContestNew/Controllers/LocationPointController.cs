@@ -48,7 +48,7 @@ namespace ApiContestNew.Controllers
             {
                 HttpStatusCode.Created => StatusCode(201, _mapper.Map<GetLocationPointDto>(response.Data)),
                 HttpStatusCode.BadRequest => BadRequest(),
-                HttpStatusCode.Conflict => Conflict(),
+                HttpStatusCode.Conflict => Conflict(_mapper.Map<GetLocationPointDto>(response.Data)),
                 _ => StatusCode(500),
             };
         }

@@ -43,7 +43,7 @@ namespace ApiContestNew.Application.Services
 
             if (equalPoint != null)
             {
-                return new ServiceResponse409<LocationPoint>();
+                return new ServiceResponse<LocationPoint>(data: equalPoint, statusCode: HttpStatusCode.Conflict);
             }
 
             var createdPoint = await _locationPointRepository.AddPointAsync(point);

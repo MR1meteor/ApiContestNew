@@ -5,6 +5,7 @@ namespace ApiContestNew.Core.Interfaces.Repositories
 {
     public interface IAnimalRepository
     {
+        Task<List<Animal>> GetAllAsync();
         Task<Animal?> GetAnimalByIdAsync(long id);
         Task<List<Animal>> GetAnimalsByFilterAsync(AnimalFilter filter);
         Task<Animal?> AddAnimalAsync(Animal animal);
