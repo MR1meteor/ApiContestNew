@@ -3,6 +3,7 @@ using ApiContestNew.Core.Interfaces.Repositories;
 using System.Net;
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Responses;
+using ApiContestNew.Core.Models.Filters;
 
 namespace ApiContestNew.Application.Services
 {
@@ -30,6 +31,22 @@ namespace ApiContestNew.Application.Services
             }
 
             return new ServiceResponse200<LocationPoint>(data: point);
+        }
+
+        async public Task<ServiceResponse<long>> GetPointIdByFilterAsync(LocationPointFilter filter)
+        {
+            if (!filter.IsValid())
+            {
+                return new ServiceResponse400<long>();
+            }
+
+            var point = await _locationPointRepository.GetPointByFilterAsync(filter);
+            if (point == null)
+            {
+                return new ServiceResponse404<long>();
+            }
+
+            return new ServiceResponse200<long>(data: point.Id);
         }
 
         async public Task<ServiceResponse<LocationPoint>> AddPointAsync(LocationPoint point)

@@ -1,5 +1,6 @@
 ﻿using ApiContestNew.Core.Interfaces.Repositories;
 using ApiContestNew.Core.Models.Entities;
+using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Core.Specifications.LocationPoint;
 using ApiContestNew.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,12 @@ namespace ApiContestNew.Infrastructure.Repositories
         public async Task<LocationPoint?> GetPointByCoordsAsync(double latitude, double longitude)
         {
             return await ApplySpecification(new PointByCoordsWithAll(latitude, longitude))
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<LocationPoint?> GetPointByFilterAsync(LocationPointFilter filter)
+        {
+            return await ApplySpecification(new PointByFilter(filter))
                 .FirstOrDefaultAsync();
         }
 
