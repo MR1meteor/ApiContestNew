@@ -117,7 +117,11 @@ namespace ApiContestNew.Core.Models.Entities
                 return true;
             }
 
-            if ((Math.Round(p3.Longitude - p1.Longitude, 4))/(Math.Round(p2.Longitude - p1.Longitude, 4)) == (Math.Round(p3.Latitude - p1.Latitude, 4))/(Math.Round(p2.Latitude - p1.Latitude, 4)))
+            var leftPart = (p3.Longitude - p1.Longitude) / (p2.Longitude - p1.Longitude);
+            var rightPart = (p3.Latitude - p1.Latitude) / (p2.Latitude - p1.Latitude);
+            double precision = 0.01;
+
+            if (leftPart + precision > rightPart && leftPart - precision < rightPart)
             {
                 return true;
             }
