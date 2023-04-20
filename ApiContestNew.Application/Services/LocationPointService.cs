@@ -4,6 +4,7 @@ using System.Net;
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Responses;
 using ApiContestNew.Core.Models.Filters;
+using NGeoHash;
 
 namespace ApiContestNew.Application.Services
 {
@@ -47,6 +48,24 @@ namespace ApiContestNew.Application.Services
             }
 
             return new ServiceResponse200<long>(data: point.Id);
+        }
+
+        async public Task<ServiceResponse<string>> GetGeohashByFilterAsync(LocationPointFilter filter)
+        {
+            if (!filter.IsValid())
+            {
+                return new ServiceResponse400<string>();
+            }
+
+            var point = await _locationPointRepository.GetPointByFilterAsync(filter);
+            if (point == null)
+            {
+                return new ServiceResponse404<string>();
+            }
+
+            var geohash = GeoHash.Encode(point.Latitude, point.Longitude, 12);
+
+            return new ServiceResponse200<string>(data: geohash);
         }
 
         async public Task<ServiceResponse<LocationPoint>> AddPointAsync(LocationPoint point)
