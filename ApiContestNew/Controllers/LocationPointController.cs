@@ -56,7 +56,38 @@ namespace ApiContestNew.Controllers
         [HttpGet("geohash")]
         public async Task<ActionResult<string>> GetGeohashByFilter([FromQuery]LocationPointFilter filter)
         {
-            var response = await _locationPointService.GetGeohashByFilterAsync(filter);
+            var precision = 12;
+            var response = await _locationPointService.GetGeohashByFilterAsync(filter, precision);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(response.Data),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpGet("geohashv2")]
+        public async Task<ActionResult<string>> GetGeohashv2ByFilter([FromQuery] LocationPointFilter filter)
+        {
+            var precision = 12;
+            var response = await _locationPointService.GetEncodedGeohashByFilterAsync(filter, precision);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(response.Data),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpGet("geohashv3")] // TODO: Try to define the encoding (this doesnt work properly)
+        public async Task<ActionResult<string>> GetGeohashv3ByFilter([FromQuery] LocationPointFilter filter)
+        {
+            var precision = 14;
+            var response = await _locationPointService.GetEncodedGeohashByFilterAsync(filter, precision);
 
             return response.StatusCode switch
             {

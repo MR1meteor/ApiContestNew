@@ -5,6 +5,8 @@ using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Responses;
 using ApiContestNew.Core.Models.Filters;
 using NGeoHash;
+using ApiContestNew.Infrastructure.Repositories;
+using System.Text;
 
 namespace ApiContestNew.Application.Services
 {
@@ -50,7 +52,7 @@ namespace ApiContestNew.Application.Services
             return new ServiceResponse200<long>(data: point.Id);
         }
 
-        async public Task<ServiceResponse<string>> GetGeohashByFilterAsync(LocationPointFilter filter)
+        async public Task<ServiceResponse<string>> GetGeohashByFilterAsync(LocationPointFilter filter, int precision)
         {
             if (!filter.IsValid())
             {
@@ -63,9 +65,24 @@ namespace ApiContestNew.Application.Services
                 return new ServiceResponse404<string>();
             }
 
-            var geohash = GeoHash.Encode(point.Latitude, point.Longitude, 12);
+            var geohash = GeoHash.Encode(point.Latitude, point.Longitude, precision);
 
             return new ServiceResponse200<string>(data: geohash);
+        }
+
+        async public Task<ServiceResponse<string>> GetEncodedGeohashByFilterAsync(LocationPointFilter filter, int precision)
+        {
+            var response = await GetGeohashByFilterAsync(filter, precision);
+            string encodedGeohash = string.Empty;
+
+            if (response.Data != null)
+            {
+                var geohash = response.Data;
+                encodedGeohash = EncodeGeohash(geohash);
+            }
+
+            return new ServiceResponse<string>(
+                statusCode: response.StatusCode, data: encodedGeohash, message: response.Message);
         }
 
         async public Task<ServiceResponse<LocationPoint>> AddPointAsync(LocationPoint point)
@@ -141,6 +158,13 @@ namespace ApiContestNew.Application.Services
             await _locationPointRepository.DeletePointAsync(point);
 
             return new ServiceResponse200<LocationPoint>();
+        }
+
+        private string EncodeGeohash(string geohash)
+        {
+            var bytes = Encoding.UTF8.GetBytes(geohash);
+            var encodedGeohash = Convert.ToBase64String(bytes);
+            return encodedGeohash;
         }
     }
 }
