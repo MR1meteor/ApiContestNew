@@ -5,7 +5,6 @@ using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Responses;
 using ApiContestNew.Core.Models.Filters;
 using NGeoHash;
-using ApiContestNew.Infrastructure.Repositories;
 using System.Text;
 
 namespace ApiContestNew.Application.Services

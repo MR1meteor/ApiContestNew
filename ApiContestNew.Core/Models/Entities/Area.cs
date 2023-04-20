@@ -1,4 +1,6 @@
-﻿namespace ApiContestNew.Core.Models.Entities
+﻿using System.Drawing;
+
+namespace ApiContestNew.Core.Models.Entities
 {
     public class Area : BaseEntity
     {
@@ -38,44 +40,23 @@
                 return false;
             }
 
-            //if (AreaIntersect((List<LocationPoint>)AreaPoints))
-            //{
-            //    return false;
-            //}
-
-            double y1 = ((List<LocationPoint>)AreaPoints)[0].Longitude;
-            double y2 = ((List<LocationPoint>)AreaPoints)[1].Longitude;
-            double x1 = ((List<LocationPoint>)AreaPoints)[0].Latitude;
-            double x2 = ((List<LocationPoint>)AreaPoints)[1].Latitude;
-
-            if (y1 - y2 == 0)
+            for (int i = 0; i < AreaPoints.Count - 3; i++)
             {
-                if (((List<LocationPoint>)AreaPoints)[2].Longitude == y1)
+                for (int j = i + 2; j < AreaPoints.Count - 1; j++)
                 {
-                    return false;
+                    if (AreLinesCrossing(
+                        ((List<LocationPoint>)AreaPoints)[i],
+                        ((List<LocationPoint>)AreaPoints)[i + 1],
+                        ((List<LocationPoint>)AreaPoints)[j],
+                        ((List<LocationPoint>)AreaPoints)[j + 1]))
+                    {
+                        return false;
+                    }
                 }
             }
 
-            if (x1 - x2 == 0)
-            {
-                if (((List<LocationPoint>)AreaPoints)[2].Latitude == x1)
-                {
-                    return false;
-                }
-            } // TODO: Wrong solution..
-
-            double equationIndex = (y1 - y2) / (x1 - x2);
-            double equationOffset = y2 - equationIndex * x2;
-
-            bool oneLine = true;
             foreach (var point in AreaPoints)
             {
-                if (oneLine &&
-                    point.Longitude != equationIndex * point.Latitude + equationOffset)
-                {
-                    oneLine = false;
-                }
-
                 if (point == null ||
                     !point.IsValidWithoutId())
                 {
@@ -83,35 +64,65 @@
                 }
             }
 
-            if (oneLine)
+            for (int i = 0; i < AreaPoints.Count - 2; i++)
             {
-                return false;
+                if (OneLine(
+                    ((List<LocationPoint>)AreaPoints)[i],
+                    ((List<LocationPoint>)AreaPoints)[i + 1],
+                    ((List<LocationPoint>)AreaPoints)[i + 2]))
+                {
+                    return false;
+                }
             }
 
             return true;
         }
 
-        //private bool LinesCrossing()
-        //{
-            
-        //}
+        private bool AreLinesCrossing(LocationPoint p1, LocationPoint p2, LocationPoint p3, LocationPoint p4) // TODO: Redo this (doesnt work)
+        {
+            double equationIndex1 = (p1.Longitude - p2.Longitude) / (p1.Latitude - p2.Latitude);
+            double equationOffset1 = p2.Longitude - equationIndex1 * p2.Latitude;
 
-        //private bool AreaSelfCrossing(List<LocationPoint> polygon)
-        //{
-        //    int n = polygon.Count;
+            double equationIndex2 = (p3.Longitude - p4.Longitude) / (p3.Latitude - p4.Latitude);
+            double equationOffset2 = p4.Longitude - equationIndex2 * p4.Latitude;
 
-        //    for (int i = 0; i < n; ++i)
-        //    {
-        //        for (int j = i + 1; j < n; ++j)
-        //        {
-        //            if (LinesIntersect(polygon[i], polygon[(i + 1) % n], polygon[j], polygon[(j + 1) % n]))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
+            try
+            {
+                var crossingLongitude = equationIndex1 * (equationOffset2 - equationOffset1) / (equationIndex1 - equationIndex2) + equationOffset1;
+                var crossingLatitude = (equationOffset2 - equationOffset1) / (equationIndex1 - equationIndex2);
 
-        //    return false;
-        //}
+                if (LocationPoint.IsPointOnLine(new LocationPoint { Latitude = crossingLatitude, Longitude = crossingLongitude } ,p1, p2) &&
+                    LocationPoint.IsPointOnLine(new LocationPoint { Latitude = crossingLatitude, Longitude = crossingLongitude }, p3, p4))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        private bool OneLine(LocationPoint p1, LocationPoint p2, LocationPoint p3)
+        {
+            if (p1.Latitude == p2.Latitude && p1.Latitude == p3.Latitude)
+            {
+                return true;
+            }
+
+            if (p1.Longitude == p2.Longitude && p1.Longitude == p3.Longitude)
+            {
+                return true;
+            }
+
+            if ((Math.Round(p3.Longitude - p1.Longitude, 4))/(Math.Round(p2.Longitude - p1.Longitude, 4)) == (Math.Round(p3.Latitude - p1.Latitude, 4))/(Math.Round(p2.Latitude - p1.Latitude, 4)))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
