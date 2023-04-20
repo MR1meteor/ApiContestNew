@@ -1,5 +1,6 @@
 ﻿using ApiContestNew.Core.Interfaces.Services;
 using ApiContestNew.Core.Models.Entities;
+using ApiContestNew.Core.Models.Filters;
 using ApiContestNew.Dtos.LocationPoint;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,20 @@ namespace ApiContestNew.Controllers
             return response.StatusCode switch
             {
                 HttpStatusCode.OK => Ok(_mapper.Map<GetLocationPointDto>(response.Data)),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => StatusCode(500),
+            };
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<long>> GetLocationPointIdByFilter([FromQuery]LocationPointFilter filter)
+        {
+            var response = await _locationPointService.GetPointIdByFilterAsync(filter);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(response.Data),
                 HttpStatusCode.BadRequest => BadRequest(),
                 HttpStatusCode.NotFound => NotFound(),
                 _ => StatusCode(500),
