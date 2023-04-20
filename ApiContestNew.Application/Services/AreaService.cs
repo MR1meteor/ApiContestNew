@@ -2,10 +2,6 @@
 using ApiContestNew.Core.Interfaces.Services;
 using ApiContestNew.Core.Models.Entities;
 using ApiContestNew.Core.Models.Responses;
-using System.Drawing;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
 
 namespace ApiContestNew.Application.Services
 {
