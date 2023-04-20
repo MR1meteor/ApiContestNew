@@ -53,6 +53,20 @@ namespace ApiContestNew.Controllers
             };
         }
 
+        [HttpGet("geohash")]
+        public async Task<ActionResult<string>> GetGeohashByFilter([FromQuery]LocationPointFilter filter)
+        {
+            var response = await _locationPointService.GetGeohashByFilterAsync(filter);
+
+            return response.StatusCode switch
+            {
+                HttpStatusCode.OK => Ok(response.Data),
+                HttpStatusCode.BadRequest => BadRequest(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => StatusCode(500),
+            };
+        }
+
         [Authorize(Roles = "ADMIN, CHIPPER")]
         [HttpPost]
         public async Task<ActionResult<GetLocationPointDto>> AddLocationPoint(AddLocationPointDto dto)

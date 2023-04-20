@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NGeoHash" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ApiContestNew.Core\ApiContestNew.Core.csproj" />
     <ProjectReference Include="..\ApiContestNew.Infrastructure\ApiContestNew.Infrastructure.csproj" />
   </ItemGroup>

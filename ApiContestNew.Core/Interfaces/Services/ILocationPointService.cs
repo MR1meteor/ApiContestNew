@@ -8,6 +8,7 @@ namespace ApiContestNew.Core.Interfaces.Services
     {
         Task<ServiceResponse<LocationPoint>> GetPointAsync(long id);
         Task<ServiceResponse<long>> GetPointIdByFilterAsync(LocationPointFilter filter);
+        Task<ServiceResponse<string>> GetGeohashByFilterAsync(LocationPointFilter filter);
         Task<ServiceResponse<LocationPoint>> AddPointAsync(LocationPoint point);
         Task<ServiceResponse<LocationPoint>> UpdatePointAsync(long id, LocationPoint point);
         Task<ServiceResponse<LocationPoint>> DeletePointAsync(long id);
